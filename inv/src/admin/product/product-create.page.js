@@ -13,7 +13,7 @@ export function ProductCreate(){
             let response = await uploader('post', 'product', data, file, true)
             if(response.status){
                 toast.success(response.msg);
-                navigate('/admin/product');
+                navigate('/dashboard/product');
             }
         } catch(error) {
             toast.error("Error while adding data...");

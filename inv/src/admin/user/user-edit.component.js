@@ -11,12 +11,11 @@ export function UserEdit(){
     let [user, setUser] = useState();
 
     const editUser = async (data, file) => {
-        console.log("data aako",data);
         try {
             let response = await uploader('put', 'user/'+ user._id, data, file)
             if(response.status){
                 toast.success(response.msg);
-                navigate('/admin/user');
+                navigate('/dashboard/user');
             }
         } catch(error) {
             toast.error("Error while updating data...");
@@ -30,7 +29,7 @@ export function UserEdit(){
         })
         .catch((error) => {
             toast.error(error.response.msg)
-            navigate('/admin/user');
+            navigate('/dashboard/user');
             // navigate(-1);
         })
     }, []);

@@ -17,7 +17,7 @@ export function ProductEdit(){
             let response = await uploader('put', 'product/'+product._id, data, file, true)
             if(response.status){
                 toast.success(response.msg);
-                navigate('/admin/product');
+                navigate('/dashboard/product');
             }
         } catch(error) {
             toast.error("Error while updating data...");
@@ -31,7 +31,7 @@ export function ProductEdit(){
         })
         .catch((error) => {
             toast.error(error.response.msg)
-            navigate('/admin/product');
+            navigate('/dashboard/product');
             // navigate(-1);
         })
     }, []);

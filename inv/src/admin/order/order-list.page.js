@@ -5,42 +5,31 @@ import {toast} from "react-toastify";
 import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";
-import { getLoggedInUser } from "../../helpers/functions";
-import { useNavigate } from "react-router-dom";
 
-export function UserList(){
+
+export function OrderList(){
     const [data, setData] = useState([]);
-    let navigate = useNavigate();
-
-    let logged_in_user = getLoggedInUser();
-    if(!logged_in_user) {
-        toast.error("Your user information has expired. Please login again");
-        localStorage.clear();
-        navigate('/login');
-    }
-    const getAllUsers = async () => {
+    const getAllOrders = async () => {
         try {
-            let result = await getItems('/user/')
+            let result = await getItems('/order/')
             if(result.data.result){
-
-                let user_data = result.data.result.filter((o) => (o._id != logged_in_user.id))
-                setData(user_data)
+                setData(result.data.result)
             }
         } catch(error) {
             // error handle
-            toast.error("Error while fetching user data");
+            toast.error("Error while fetching order data");
         }
     }
     useEffect( () => {
-        getAllUsers()
+        getAllOrders()
     }, []);
 
     const onDelete = (id) => {
-        deleteItem('/user/'+id, true)
+        deleteItem('/order/'+id, true)
         .then((res) => {
             if(res.data.status) {
                 toast.success(res.data.msg);
-                getAllUsers()
+                getAllOrders()
             } else {
                 toast.error(res.data.msg);
             }
@@ -51,9 +40,9 @@ export function UserList(){
     }
     return (<>
         <AdminPageTitle
-            title="User"
-            bread_crumb="User List"
-            add_link="/dashboard/user/create"
+            title="Order"
+            bread_crumb="Order List"
+            add_link="/dashboard/order/create"
         />
 
         <div className="card mb-4">
@@ -82,7 +71,7 @@ export function UserList(){
 
                                 <td>
                                     <ActionButton
-                                        editLink={"/dashboard/user/"+o._id}
+                                        editLink={"/dashboard/order/"+o._id}
                                         id={o._id}
                                         onDelete={onDelete}
                                     />

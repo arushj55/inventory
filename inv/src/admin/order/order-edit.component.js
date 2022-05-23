@@ -1,22 +1,21 @@
 import { getItems, uploader } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
-import { SupplierFormComponent } from "./supplier-form.component";
+import { OrderFormComponent } from "./order-form.component";
 import {toast} from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export function SupplierEdit(){
+export function OrderEdit(){
     let navigate = useNavigate();
     let params = useParams();
-    let [supplier, setSupplier] = useState();
+    let [order, setOrder] = useState();
 
-    const editSupplier = async (data) => {
-
+    const editOrder = async (data, file) => {
         try {
-            let response = await uploader('put','supplier/'+supplier._id, data,true)
+            let response = await uploader('put', 'order/'+ order._id, data, file)
             if(response.status){
                 toast.success(response.msg);
-                navigate('/dashboard/supplier');
+                navigate('/dashboard/order');
             }
         } catch(error) {
             toast.error("Error while updating data...");
@@ -24,25 +23,24 @@ export function SupplierEdit(){
     }
 
     useEffect(() => {
-        getItems('/supplier/'+params.id)
+        getItems('/order/'+params.id)
         .then((response) => {
-            
-            setSupplier(response.data.result);
+            setOrder(response.data.result);
         })
         .catch((error) => {
             toast.error(error.response.msg)
-            navigate('/dashboard/supplier');
+            navigate('/dashboard/order');
             // navigate(-1);
         })
     }, []);
     return (<>
         <AdminPageTitle 
-            title="Supplier Update"
-            bread_crumb="Supplier Update"
+            title="Order Update"
+            bread_crumb="Order Update"
         />
-        <SupplierFormComponent 
-            onHandleSubmit={editSupplier}
-            supplier={supplier}
+        <OrderFormComponent 
+            onHandleSubmit={editOrder}
+            order={order}
         />
     </>);
 }

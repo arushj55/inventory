@@ -8,7 +8,7 @@ export function AdminSidebar() {
             <div className="sb-sidenav-menu">
                 <div className="nav">
                     <div className="sb-sidenav-menu-heading">Features</div>
-                    <NavLink className="nav-link" to="/admin">
+                    <NavLink className="nav-link" to="/dashboard">
                         <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </NavLink>

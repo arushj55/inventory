@@ -43,7 +43,7 @@ export function SupplierList(){
         <AdminPageTitle
             title="Supplier"
             bread_crumb="Supplier List"
-            add_link="/admin/supplier/create"
+            add_link="/dashboard/supplier/create"
         />
 
         <div className="card mb-4">
@@ -70,7 +70,7 @@ export function SupplierList(){
 
                                 <td>
                                     <ActionButton
-                                        editLink={"/admin/supplier/"+o._id}
+                                        editLink={"/dashboard/supplier/"+o._id}
                                         id={o._id}
                                         onDelete={onDelete}
                                     />

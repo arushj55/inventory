@@ -19,7 +19,11 @@ import {
     ProductCreate,
     ProductEdit,
     ProductList,
-    ProductPage
+    ProductPage,
+    OrderCreate,
+    OrderEdit,
+    OrderList,
+    OrderPage
 
 } from "../admin";
 function Home() {
@@ -96,6 +100,12 @@ export function App() {
                             <Route index element={<ProductList />}></Route>
                             <Route path="create" element={<ProductCreate />}></Route>
                             <Route path=":id" element={<ProductEdit />}></Route>
+                        </Route>
+
+                        <Route path="order" element={<OrderPage />}>
+                            <Route index element={<OrderList />}></Route>
+                            <Route path="create" element={<OrderCreate />}></Route>
+                            <Route path=":id" element={<OrderEdit />}></Route>
                         </Route>
                     </Route>
                 </Routes>

@@ -12,7 +12,7 @@ export function SupplierCreate(){
             let response = await postItem('/supplier',data,true)
             if(response.status){
                 toast.success(response.msg);
-                navigate('/admin/supplier');
+                navigate('/dashboard/supplier');
             }
         } catch(error) {
             toast.error("Error while adding data...");

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { deleteItem, getItems } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
 import {toast} from "react-toastify";
-
 import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";
@@ -39,16 +38,18 @@ export function ProductList(){
         })
     }
 
-    const order = () =>{
-        <>
-        <p>here</p>
-        </>
+    const purchaseorder = () =>{
+      console.log("here")
     }
+
+    const salesorder = () =>{
+        console.log("hello here")
+      }
     return (<>
         <AdminPageTitle
             title="Product"
             bread_crumb="Product List"
-            add_link="/admin/product/create"
+            add_link="/dashboard/product/create"
         />
 
         <div className="card mb-4">
@@ -61,6 +62,7 @@ export function ProductList(){
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Supplier</th>
+                            <th>Create At</th>
                             <th>Action</th>
                             <th>Order</th>
                         </tr>
@@ -73,15 +75,17 @@ export function ProductList(){
                                 <td>{o.price_unit}</td>
                                 <td>{o.quantity}</td>
                                 <td>{o.supplier?.name}</td>
+                                <td>{new Date(o.createdAt).toLocaleDateString("en-US")}</td>
                                 <td>
                                     <ActionButton
-                                        editLink={"/admin/product/"+o._id}
+                                        editLink={"/dashboard/product/"+o._id}
                                         id={o._id}
                                         onDelete={onDelete}
                                     />
                                 </td>
                                 <td>
-                                <button type="button" class="btn btn-light" onClick={order}><i className="fas fa-shopping-cart"></i></button>
+                                <button type="button" className="btn btn-sm btn-success btn-rounded" onClick={purchaseorder}><i class="fa-solid fa-bag-shopping"></i></button>
+                                <button type="button" className="btn btn-sm btn-danger btn-rounded" onClick={salesorder}><i class="fa-solid fa-bag-shopping"></i></button>
                                 </td>
                             </tr>
                         ))}

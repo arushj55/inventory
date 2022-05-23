@@ -1,18 +1,18 @@
 import { postItem} from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
-import { UserFormComponent } from "./user-form.component";
+import { OrderFormComponent } from "./order-form.component";
 import {toast} from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-export function UserCreate(){
+export function OrderCreate(){
     let navigate = useNavigate();
 
-    const addUser = async (data) => {
+    const addOrder = async (data) => {
         try {
-            let response = await postItem('/user',data,true)
+            let response = await postItem('/order',data,true)
             if(response.status){
                 toast.success(response.msg);
-                navigate('/dasboard/user');
+                navigate('/dasboard/order');
             }
         } catch(error) {
             toast.error("Error while adding data...");
@@ -20,11 +20,11 @@ export function UserCreate(){
     }
     return (<>
         <AdminPageTitle 
-            title="User Add"
-            bread_crumb="User Add"
+            title="Order Add"
+            bread_crumb="Order Add"
         />
-        <UserFormComponent 
-            onHandleSubmit={addUser}
+        <OrderFormComponent 
+            onHandleSubmit={addOrder}
         />
     </>);
 }
