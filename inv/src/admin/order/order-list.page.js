@@ -1,42 +1,43 @@
 import { useEffect, useState } from "react";
 import { deleteItem, getItems } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";
+import { NavLink } from "react-router-dom";
 
 
-export function OrderList(){
+export function OrderList() {
     const [data, setData] = useState([]);
     const getAllOrders = async () => {
         try {
             let result = await getItems('/order/')
-            if(result.data.result){
+            if (result.data.result) {
                 setData(result.data.result)
             }
-        } catch(error) {
+        } catch (error) {
             // error handle
             toast.error("Error while fetching order data");
         }
     }
-    useEffect( () => {
+    useEffect(() => {
         getAllOrders()
     }, []);
 
     const onDelete = (id) => {
-        deleteItem('/order/'+id, true)
-        .then((res) => {
-            if(res.data.status) {
-                toast.success(res.data.msg);
-                getAllOrders()
-            } else {
-                toast.error(res.data.msg);
-            }
-        })
-        .catch((error) => {
-            toast.error(error);
-        })
+        deleteItem('/order/' + id, true)
+            .then((res) => {
+                if (res.data.status) {
+                    toast.success(res.data.msg);
+                    getAllOrders()
+                } else {
+                    toast.error(res.data.msg);
+                }
+            })
+            .catch((error) => {
+                toast.error(error);
+            })
     }
     return (<>
         <AdminPageTitle
@@ -51,30 +52,42 @@ export function OrderList(){
                     <thead className="table-dark">
                         <tr>
                             <th>S.N</th>
-                            <th>FullName</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                            <th>Role</th>
-                            <th>Phone</th>
+                            <th>Bill Number</th>
+                            <th>Supplier</th>
+                            <th>Retailer</th>
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Sub Total</th>
                             <th>Action</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data && data.map((o,i) => (
+                        {data && data.map((o, i) => (
                             <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{o.full_name}</td>
-                                <td>{o.email}</td>
-                                <td>{o.address}</td>
-                                <td>{o.role}</td>
-                                <td>{o.phone}</td>
+                                <td>{i + 1}</td>
+                                <td>{o.bill_number}</td>
+                                <td>{o.supplier?.name}</td>
+                                <td>{o.retailer?.full_name}</td>
+                                <td>{o.product?.product_name}</td>
+                                <td>{o?.status}</td>
+                                <td>{o.quantity}</td>
+                                <td>{o.price}</td>
+                                <td>{o.sub_total}</td>
 
                                 <td>
                                     <ActionButton
-                                        editLink={"/dashboard/order/"+o._id}
+                                        editLink={"/dashboard/order/" + o._id}
                                         id={o._id}
                                         onDelete={onDelete}
                                     />
+                                </td>
+                                <td>
+                                    <NavLink onClick='' to="/dashboard/transaction/create" className="btn btn-sm btn-dark btn-rounded" >
+                                        <i className="fa-solid fa-money-check"></i>
+                                    </NavLink>
                                 </td>
                             </tr>
                         ))}
@@ -82,6 +95,6 @@ export function OrderList(){
                 </table>
             </div>
         </div>
-    
+
     </>)
 }

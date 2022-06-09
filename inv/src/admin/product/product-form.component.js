@@ -60,7 +60,9 @@ export function ProductFormComponent({ onHandleSubmit, product }) {
             supplier: selecteOption.value
         }))
     }
+                 
     return (<>
+
         <form onSubmit={handleSubmit}>
 
             <div className="form-group row mb-3">
@@ -74,7 +76,7 @@ export function ProductFormComponent({ onHandleSubmit, product }) {
             <div className="form-group row mb-3">
                 <label htmlFor="" className="form-label col-sm-3">Description</label>
                 <div className="col-sm-9">
-                    <textarea name="description" id="description" rows="7" className="form-control form-control-sm" style={{ "resize": "none" }} onChange={handleChange}>{product?.description}</textarea>
+                    <textarea name="description" defaultValue={product?.description} id="description" rows="7" className="form-control form-control-sm" style={{ "resize": "none" }} onChange={handleChange}>{product?.description}</textarea>
                     <span className="text-danger">{err?.description}</span>
                 </div>
             </div>
@@ -95,11 +97,6 @@ export function ProductFormComponent({ onHandleSubmit, product }) {
                     <span className="text-danger">{err?.quantity}</span>
                 </div>
             </div>
-
-            {
-                role === 'admin' 
-                    ?
-                    <>
                         <div className="form-group row mb-3">
                             <label className="form-label col-sm-3">Supplier: </label>
                             <div className="col-sm-9">
@@ -110,10 +107,7 @@ export function ProductFormComponent({ onHandleSubmit, product }) {
                                 />
                             </div>
                         </div>
-                    </>
-                    :
-                    <></>
-            }
+                  
             
             <div className="form-group row mb-3">
                 <div className="offset-sm-3 col-sm-9">

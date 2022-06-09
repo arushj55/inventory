@@ -82,7 +82,6 @@ const uploader = (method,url, data, file= [], is_strict=false) => {
                 }
             }
         }
-        console.log("url:",url)
         xhr.open(method, process.env.REACT_APP_API_URL+"/"+url);
         // Set header if required
         if(is_strict){

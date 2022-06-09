@@ -11,10 +11,9 @@ export function ProductEdit(){
     let [product, setProduct] = useState();
 
     const editProduct = async (data, file) => {
+        
         try {
-            
-            
-            let response = await uploader('put', 'product/'+product._id, data, file, true)
+            let response = await uploader('put','product/'+product._id, data, file, true)
             if(response.status){
                 toast.success(response.msg);
                 navigate('/dashboard/product');

@@ -1,21 +1,21 @@
 import { getItems, uploader } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
-import { OrderFormComponent } from "./order-form.component";
+import { PaymentFormComponent } from "./payment-form.component";
 import {toast} from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export function OrderEdit(){
+export function PaymentEdit(){
     let navigate = useNavigate();
     let params = useParams();
-    let [order, setOrder] = useState();
+    let [payment, setPayment] = useState();
 
-    const editOrder = async (data) => {
+    const editPayment = async (data, file) => {
         try {
-            let response = await uploader('put', 'order/'+ order._id, data)
+            let response = await uploader('put', 'payment/'+ payment._id, data, file)
             if(response.status){
                 toast.success(response.msg);
-                navigate('/dashboard/order');
+                navigate('/dashboard/payment');
             }
         } catch(error) {
             toast.error("Error while updating data...");
@@ -23,24 +23,24 @@ export function OrderEdit(){
     }
 
     useEffect(() => {
-        getItems('/order/'+params.id)
+        getItems('/payment/'+params.id)
         .then((response) => {
-            setOrder(response.data.result);
+            setPayment(response.data.result);
         })
         .catch((error) => {
             toast.error(error.response.msg)
-            navigate('/dashboard/order');
+            navigate('/dashboard/payment');
             // navigate(-1);
         })
     }, []);
     return (<>
         <AdminPageTitle 
-            title="Order Update"
-            bread_crumb="Order Update"
+            title="Payment Update"
+            bread_crumb="Payment Update"
         />
-        <OrderFormComponent 
-            onHandleSubmit={editOrder}
-            order={order}
+        <PaymentFormComponent 
+            onHandleSubmit={editPayment}
+            payment={payment}
         />
     </>);
 }

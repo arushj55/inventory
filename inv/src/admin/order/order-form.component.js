@@ -1,22 +1,32 @@
 
-import {  useState } from "react"
+import {  useState, useEffect} from "react"
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import {getItems} from "../../service/axios.service"
+import Select from 'react-select'
+
 
 let default_data = {
-    username: '',
-    password: '',
-    full_name: '',
-    email: '',
-    address: '',
-    phone: '',
+    bill_number: '',
+    supplier: '',
+    retailer: '',
+    product: '',
+    quantity: '',
+    price: 0,
 };
 
-export function OrderFormComponent({ onHandleSubmit, user }) {
+export function OrderFormComponent({ onHandleSubmit, order }) {
     let [err, setErr] = useState(default_data);
     let [data, setData] = useState();
+    let [price, setPrice] = useState();
+    let [supplier, setSupplier] = useState();
+    let [retailer, setRetailer] = useState();
+    let [product, setProduct] = useState();
+    let [default_supplier, setDefaultSupplier] = useState();
+    let [default_retailer, setDefaultRetailer] = useState();
+    let [default_product, setDefaultProduct] = useState();
     let [validated, setValidated] = useState(false);
 
-    
+
 
     const submitForm = (event) => {
         const form = event.currentTarget;
@@ -27,7 +37,6 @@ export function OrderFormComponent({ onHandleSubmit, user }) {
             event.stopPropagation();
             setValidated(true);
         } else {
-
             onHandleSubmit(data);
         }
 
@@ -48,9 +57,10 @@ export function OrderFormComponent({ onHandleSubmit, user }) {
     }
     const validateData = (field) => {
         let errMsg = '';
+
         switch (field) {
-            case "role":
-                errMsg = data['role'] != "staff" || data['role'] != 'retailer' ? 'Role is either retailer or staff' : '';
+            case "status":
+                errMsg = data['status'] != "purchase" || data['status'] != 'sale' ? 'Role is either sale or purchase' : '';
                 break
         }
 
@@ -63,13 +73,76 @@ export function OrderFormComponent({ onHandleSubmit, user }) {
         })
         setValidated(true);
     }
+    const getAllSuppliers = async () =>{
+        let result = await getItems('/supplier/')
+        let data = result.data.result.map((o) => ({
+            label: o.name,
+            value: o._id
+        }))
+        setSupplier(data);
+    }
+
+    const getAllReatilers = async () =>{
+        let result = await getItems('/user/')
+        let datas = result.data.result.map((o) => ({
+            label: o.full_name,
+            value: o._id,
+            role: o.role
+        }))
+        setRetailer(datas)
+    }
+
+    const getAllProducts = async () =>{
+        let result = await getItems('/product/')
+        let products = result.data.result.map((o) => ({
+            label: o.product_name,
+            value: o._id,
+            price: o.price_unit
+        }))
+        setProduct(products)
+    }
+    useEffect(() => {
+        getAllSuppliers()
+        getAllReatilers()
+        getAllProducts()
+    }, [])
+
+
+    const handleSupplierChange = (selecteOption) => {
+        setDefaultSupplier(selecteOption);
+        setData((pre) => ({
+            ...pre,
+            supplier: selecteOption.value
+        }))
+    }
+
+    const handleRetailerChange = (selecteOption) => {
+        setDefaultRetailer(selecteOption);
+        setData((pre) => ({
+            ...pre,
+            retailer: selecteOption.value
+        }))
+    }
+        const handleProductChange = (selecteOption) => {
+            setDefaultProduct(selecteOption);
+            setData((pre) => ({
+                ...pre,
+               product: selecteOption.value
+            }))
+    }
+
+        useEffect(()=>{
+            setPrice(default_product?.price)
+        },[default_product])
+
+        
     return (
-    
+
     <>
         <Container>
               <Row className="mt-3">
                   <Col>
-                      <h4 className="text-center">Register Page</h4>
+                      <h4 className="text-center">Order Page</h4>
                   </Col>
               </Row>
               <hr></hr>
@@ -79,136 +152,101 @@ export function OrderFormComponent({ onHandleSubmit, user }) {
                   <Form noValidate validated={validated} onSubmit={submitForm} className="center">
                       
                           
-                          {!user ? <>
                             <Row className="mb-3">
                           <Form.Group as={Col} md="8" controlId="validationCustom01">
-                              <Form.Label>Ordername</Form.Label>
+                              <Form.Label>Bill Number</Form.Label>
                               <Form.Control
                                   size="sm"
-                                  name="username"
+                                  name="bill_number"
                                   onChange={handleChange}
                                   required
-                                  type="text"
-                                  placeholder="Ordername"
-                                  defaultValue=""
+                                  type="number"
+                                  placeholder="Bill Number"
+                                  defaultValue={order.bill_number}
                               />
-                              <Form.Control.Feedback type="invalid">OrderName is required</Form.Control.Feedback>
+                              <Form.Control.Feedback type="invalid">Order Number is required</Form.Control.Feedback>
                           </Form.Group>
                           </Row>
 
                         <Row className="mb-3">
                       <Form.Group as={Col} md="4" controlId="validationCustom02">
-                              <Form.Label>Password</Form.Label>
-                              <Form.Control
-                                  size="sm"
-                                  name="password"
-                                  required
-                                  onChange={handleChange}
-                                  type="password"
-                                  placeholder="password"
-                                  defaultValue=""
-                              />
-                              <Form.Control.Feedback type="invalid" >Password is required</Form.Control.Feedback>
+                              <Form.Label>Supplier</Form.Label>
+                            <Select
+                                    value={default_supplier}
+                                    onChange={handleSupplierChange}
+                                    options={supplier}
+                                />
                           </Form.Group>
 
                           <Form.Group as={Col} md="4" controlId="validationCustom03">
-                              <Form.Label>Confirm-Password</Form.Label>
-                              <Form.Control
-                                  size="sm"
-                                  required
-                                  name="confirm-password"
-                                  type="password"
-                                  onChange={handleChange}
-                                  placeholder="password"
-                                  defaultValue=""
-                              />
-                              <Form.Control.Feedback type="invalid">Confirm Password does not match.</Form.Control.Feedback>
+                              <Form.Label>Retailer</Form.Label>
+                              <Select
+                                    value={default_retailer}
+                                    onChange={handleRetailerChange}
+                                    options={retailer}
+                                />
                           </Form.Group>
                       
                       </Row>
 
-                      
-                      </> :<></> }
-                            <Row className="mb-3">
-                      <Form.Group as={Col} md="8" controlId="validationCustom04">
-                              <Form.Label>Full Name</Form.Label>
-                              <Form.Control
-                                  size="sm"
-                                  required
-                                  name="full_name"
-                                  type="text"
-                                  onChange={handleChange}
-                                  placeholder="Full Name"
-                                  defaultValue={user?.full_name}
-                              />
-                              <Form.Control.Feedback type="invalid" >Full Name is required</Form.Control.Feedback>
-                          </Form.Group>
-                            </Row>
                           <Row className="mb-3">
                           <Form.Group as={Col} md="8" controlId="validationCustom05">
-                          <Form.Label>Email</Form.Label>
-                              <Form.Control 
-                                  type="text" 
-                                  name="email" 
-                                  placeholder="Email" 
-                                  onChange={handleChange}
-                                  required
-                                  defaultValue={user?.email}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  Please provide a valid Email.
-                              </Form.Control.Feedback>
+                          <Form.Label>product</Form.Label>
+                          <Select
+                                    value={default_product}
+                                    onChange={handleProductChange}
+                                    options={product}
+                                />
                           </Form.Group>
                       </Row>
 
                       <Row className="mb-3">
                           <Form.Group as={Col} md="8" controlId="validationCustom06">
-                              <Form.Label>Role</Form.Label>
+                              <Form.Label>Status</Form.Label>
                                   <Form.Select
-                                      aria-label="Role" 
-                                      name="role"
+                                      aria-label="Status" 
+                                      name="status"
                                       onChange={handleChange}
                                   >
-                                      <option value="staff" selected={user?.role == 'staff' ? true : false}>Staff</option>
-                                      <option value="retailer" selected={user?.role == 'retailer' ? true : false}>Retailer</option>
+                                      <option value="purchase" selected={order?.role == 'purchase' ? true : false}>Purchase</option>
+                                      <option value="sale" selected={order?.role == 'sale' ? true : false}>Sale</option>
                                   </Form.Select>
                               <Form.Control.Feedback type="invalid">{
-                                  err['role'] ?? 'Role is required'
+                                  err['status'] ?? 'Status is required'
                               }</Form.Control.Feedback>
+                          </Form.Group>
+                      </Row>
+
+                      <Row className="mb-3">
+                          <Form.Group as={Col} md="8" controlId="validationCustom06">
+                              <Form.Label>Quantity</Form.Label>
+                              <Form.Control 
+                                  type="text" 
+                                  name="quantity" 
+                                  placeholder="number" 
+                                  onChange={handleChange}
+                                  required
+                                  defaultValue={order.quantity}
+                              />
+                              <Form.Control.Feedback type="invalid">
+                                 Please provide a valid quantity
+                              </Form.Control.Feedback>
                           </Form.Group>
                       </Row>
 
 
                       <Row className="mb-3">
                           <Form.Group as={Col} md="8" controlId="validationCustom07">
-                          <Form.Label>Address</Form.Label>
+                          <Form.Label>Price</Form.Label>
                               <Form.Control 
-                                  type="text" 
-                                  name="address" 
-                                  placeholder="City" 
+                                  type="number" 
+                                  name="price" 
+                                  placeholder="price" 
                                   onChange={handleChange}
-                                  required 
-                                  defaultValue={user?.address}
+                                  defaultValue={price}
                               />
                               <Form.Control.Feedback type="invalid">
                                   Please provide a valid Address.
-                              </Form.Control.Feedback>
-                          </Form.Group>
-                      </Row>
-                        
-                      <Row className="mb-3">
-                          <Form.Group as={Col} md="8" controlId="validationCustom08">
-                          <Form.Label>Mobile Number</Form.Label>
-                              <Form.Control 
-                                  type="number" 
-                                  name="phone"
-                                  placeholder="Number" 
-                                  required 
-                                  onChange={handleChange}
-                                  defaultValue={user?.phone}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  Please provide a valid Number.
                               </Form.Control.Feedback>
                           </Form.Group>
                       </Row>

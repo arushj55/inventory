@@ -1,14 +1,13 @@
-const Product = require("../model/product.model")
-
-
-class ProductController{
-
-    insertProduct= (req,res,next) =>{
+const Order = require("../model/order.model");
+const product = require("../model/product.model");
+class OrderController{
+    createOrder = (req, res, next) => {
         let data = req.body;
+        data.sub_total = data.price*data.quantity;
 
-            let product = Product(data);
+        let order = Order(data);
 
-            product.save((err,suc)=>{
+            order.save((err,suc)=>{
                 if(err){
                     console.log(err);
                     res.json({
@@ -21,13 +20,37 @@ class ProductController{
                     res.json({
                         result:suc,
                         status: true,
-                        msg:"product inserted successfully..."
+                        msg:"order inserted successfully..."
                     })
                 }
             })
+        
     }
-    Listallproduct= (req,res,next)=>{
-        Product.find()
+
+    Listall= (req,res,next)=>{
+        Order.find()
+        .populate('supplier')
+        .populate('retailer')
+        .populate('product')
+        .then((succ)=>{
+            res.json({
+                result: succ,
+                status:true,
+                msg:"data fetched successfully"
+            })
+        })
+        .catch((err)=>{
+            console.error(err);
+            next({
+                statuscode:400,
+                msg: "Error while fetching data"
+            })
+
+        })
+    }
+
+    getorderbyid= (req,res,next)=>{
+        Order.findById({_id: req.params.id})
         .populate('supplier')
         .then((succ)=>{
             res.json({
@@ -46,30 +69,11 @@ class ProductController{
         })
     }
 
-    getproductbyid= (req,res,next)=>{
-        Product.findById({_id: req.params.id})
-        .populate('supplier')
-        .then((succ)=>{
-            res.json({
-                result: succ,
-                status:true,
-                msg:"data fetched successfully"
-            })
-        })
-        .catch((err)=>{
-            console.error(err);
-            next({
-                statuscode:400,
-                msg: "Error while fetching data"
-            })
-
-        })
-    }
 
     updateproductbyid= (req,res,next)=>{
         let data =req.body;
         console.log("data",data)
-        Product.updateOne({_id: req.params.id},{$set:data},(err,succ)=>{
+        product.updateOne({_id: req.params.id},{$set:data},(err,succ)=>{
             if(err){
                 console.log(err);
                 next({
@@ -88,8 +92,8 @@ class ProductController{
         })
     }
 
-    deleteproductbyid= (req,res,next)=>{
-        Product.deleteOne({_id: req.params.id},(err,succ)=>{
+    deleteorderbyid= (req,res,next)=>{
+            Order.deleteOne({_id: req.params.id},(err,succ)=>{
             if(err){
                 next({
                     statuscode:400,
@@ -105,12 +109,6 @@ class ProductController{
             }
         })
     }
-
-
-
 }
 
-    
-
-
-module.exports = ProductController;
+module.exports = OrderController;

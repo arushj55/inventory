@@ -3,6 +3,7 @@ import { UserPage, UserList, UserCreate, UserEdit } from "./user";
 import { SupplierPage, SupplierList, SupplierCreate, SupplierEdit } from "./supplier";
 import { ProductPage,ProductList,ProductCreate,ProductEdit } from "./product";
 import { OrderPage,OrderList,OrderCreate,OrderEdit } from "./order";
+import { PaymentPage,PaymentList,PaymentCreate,PaymentEdit } from "./payment";
 export {
     AdminDashboard,
     UserPage, 
@@ -20,5 +21,9 @@ export {
     OrderCreate,
     OrderEdit,
     OrderList,
-    OrderPage
+    OrderPage,
+    PaymentCreate,
+    PaymentEdit,
+    PaymentList,
+    PaymentPage
 }

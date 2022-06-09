@@ -67,7 +67,7 @@ export function AdminSidebar() {
                     </a>
                     <div className="collapse" id="order" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                     <nav className="sb-sidenav-menu-nested nav">
-                                            <NavLink className="nav-link" to="/dashboard/order/create">Create Order</NavLink>
+                                        <NavLink className="nav-link" to="/dashboard/order/create">Create Order</NavLink> 
                                             <NavLink className="nav-link" to="/dashboard/order">List Order</NavLink>
                                         </nav>
                     </div>

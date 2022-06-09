@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { postItem } from "../service/axios.service";
 import { AdminLayout } from "../layout/admin.layout"
 import { useNavigate } from 'react-router-dom';
+import { HomePage } from "../pages/home.page";
 import {
     AdminDashboard,
     SupplierList,
@@ -23,7 +24,11 @@ import {
     OrderCreate,
     OrderEdit,
     OrderList,
-    OrderPage
+    OrderPage,
+   PaymentCreate,
+   PaymentEdit,
+   PaymentList,
+   PaymentPage
 
 } from "../admin";
 function Home() {
@@ -68,8 +73,6 @@ function AdminPrivateRoutes({ component }) {
     } else {
         return <></>
     }
-
-    // return is_logged && role =='admin' ? component : <Navigate to="/login"></Navigate>
 }
 
 export function App() {
@@ -78,6 +81,7 @@ export function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<Home />}>
+                    <Route index element={<HomePage/>}></Route>
                         <Route path='login' element={<Login />}></Route>
                     </Route>
 
@@ -106,6 +110,12 @@ export function App() {
                             <Route index element={<OrderList />}></Route>
                             <Route path="create" element={<OrderCreate />}></Route>
                             <Route path=":id" element={<OrderEdit />}></Route>
+                        </Route>
+
+                        <Route path="Transaction" element={<PaymentPage />}>
+                            <Route index element={<PaymentList />}></Route>
+                            <Route path="create" element={<PaymentCreate />}></Route>
+                            <Route path=":id" element={<PaymentEdit />}></Route>
                         </Route>
                     </Route>
                 </Routes>

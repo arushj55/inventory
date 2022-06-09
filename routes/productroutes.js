@@ -6,6 +6,10 @@ router.route('/')
     .post(upload.none(),Productcltr.insertProduct)
     .get(Productcltr.Listallproduct);
 
+router.route('/:id')
+    .put(upload.none(),Productcltr.updateproductbyid)
+    .get(upload.none(),Productcltr.getproductbyid)
+    .delete(Productcltr.deleteproductbyid)
 
 
 module.exports =  router;

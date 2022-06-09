@@ -2,6 +2,7 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar,Container,Nav,NavDropdown,Offcanvas,Button,Form,FormControl} from 'react-bootstrap'
 import {NavLink} from'react-router-dom';
+import logo from '../../../assets/image/logo.jpg'
 
 class Dashboard extends React.Component {
   
@@ -12,7 +13,12 @@ class Dashboard extends React.Component {
   {[false].map((expand) => (
     <Navbar key={expand} bg="light" expand={expand} className="mb-3">
       <Container fluid>
-      <NavLink to="/" className='navbar-brand'>Akar logo</NavLink>
+      <NavLink to="/" className='navbar-brand'> <img
+          style={{width:50}}
+          src={logo}
+          className='img-fluid rounded-circle'
+          alt='Akar'
+        /></NavLink> 
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-${expand}`}
