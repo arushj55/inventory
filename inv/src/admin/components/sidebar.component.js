@@ -55,6 +55,18 @@ export function AdminSidebar() {
                                         </nav>
                     </div>
 
+                    <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaction" aria-expanded="false" aria-controls="transaction">
+                        <div className="sb-nav-link-icon"><i className="fas fa-dollar"></i></div>
+                        Transactions
+                        <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                    </a>
+                    <div className="collapse" id="transaction" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav className="sb-sidenav-menu-nested nav">
+                                            <NavLink className="nav-link" to="/dashboard/transaction/create">Create Transaction</NavLink>
+                                            <NavLink className="nav-link" to="/dashboard/transaction">List Transaction</NavLink>
+                                        </nav>
+                    </div>
+
                     </>
                             : 
                         <></>
@@ -72,17 +84,7 @@ export function AdminSidebar() {
                                         </nav>
                     </div>
 
-                    <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#transaction" aria-expanded="false" aria-controls="transaction">
-                        <div className="sb-nav-link-icon"><i className="fas fa-dollar"></i></div>
-                        Transactions
-                        <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
-                    </a>
-                    <div className="collapse" id="transaction" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav className="sb-sidenav-menu-nested nav">
-                                            <NavLink className="nav-link" to="/dashboard/transaction/create">Create Transaction</NavLink>
-                                            <NavLink className="nav-link" to="/dashboard/transaction">List Transaction</NavLink>
-                                        </nav>
-                    </div>
+                    
                                
                     
                 </div>

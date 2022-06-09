@@ -14,7 +14,7 @@ export function AdminTopNav({title}) {
         localStorage.removeItem("reactuser_user");
         localStorage.removeItem('reactuser_token');
 
-        navigate('/login');
+        navigate('/');
     
     }
     return (<>

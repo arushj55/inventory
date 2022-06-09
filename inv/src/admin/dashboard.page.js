@@ -13,11 +13,11 @@ export function AdminDashboard() {
                     </li>
                     <li className="breadcrumb-item active"></li>
                 </ol>
-
-                <div>
-                    <Chart/>
-                </div>
             </div>
-            </>
+
+            <div className="container-fluid">
+                <Chart/>
+            </div>
+        </>
     );
 }

@@ -25,10 +25,10 @@ import {
     OrderEdit,
     OrderList,
     OrderPage,
-   PaymentCreate,
-   PaymentEdit,
-   PaymentList,
-   PaymentPage
+    PaymentCreate,
+    PaymentEdit,
+    PaymentList,
+    PaymentPage
 
 } from "../admin";
 function Home() {
@@ -38,6 +38,10 @@ function Home() {
         <Footer></Footer>
     </>
     )
+}
+
+function RetailerDashboard(){
+    return(<><h1>Retailer</h1></>)
 }
 
 function AdminPrivateRoutes({ component }) {
@@ -81,7 +85,7 @@ export function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<Home />}>
-                    <Route index element={<HomePage/>}></Route>
+                        <Route index element={<HomePage />}></Route>
                         <Route path='login' element={<Login />}></Route>
                     </Route>
 
@@ -117,6 +121,10 @@ export function App() {
                             <Route path="create" element={<PaymentCreate />}></Route>
                             <Route path=":id" element={<PaymentEdit />}></Route>
                         </Route>
+                    </Route>
+
+                    <Route path="/retailer" element={<RetailerDashboard/>}>
+
                     </Route>
                 </Routes>
             </BrowserRouter>
