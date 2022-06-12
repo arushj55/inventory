@@ -1,0 +1,22 @@
+import { NavLink } from "react-router-dom";
+import "../../pages/map.css"
+export function RetailerSidebar() {
+    let user = JSON.parse(localStorage.getItem('reactuser_user'));
+    return (<>
+        <nav className="sb-sidenav accordion sb-sidenav" id="sidenavAccordion">
+            <div className="sb-sidenav-menu">
+                <div className="nav">
+                    <div className="sb-sidenav-menu-heading">Features</div>
+                    <NavLink className="nav-link" to="/dashboard" style={{color:"black"}}>
+                        <div className="sb-nav-link-icon" style={{color:"#b66dff"}}><i className="fas fa-tachometer-alt"></i></div>
+                        Dashboard
+                    </NavLink>
+                </div>
+            </div>
+            <div className="sb-sidenav-footer">
+                <div className="small">Logged in as:</div>
+                {user.name}
+            </div>
+        </nav>
+    </>)
+}

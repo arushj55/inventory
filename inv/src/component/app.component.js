@@ -7,6 +7,7 @@ import { postItem } from "../service/axios.service";
 import { AdminLayout } from "../layout/admin.layout"
 import { useNavigate } from 'react-router-dom';
 import { HomePage } from "../pages/home.page";
+import {RetailerDashboard} from "../retailer";
 import {
     AdminDashboard,
     SupplierList,
@@ -31,6 +32,7 @@ import {
     PaymentPage
 
 } from "../admin";
+import { RetailerLayout } from "../layout/retailer.layout";
 function Home() {
     return (<>
         <Header></Header>
@@ -40,9 +42,7 @@ function Home() {
     )
 }
 
-function RetailerDashboard(){
-    return(<><h1>Retailer</h1></>)
-}
+
 
 function AdminPrivateRoutes({ component }) {
     // TODO: Login check 
@@ -123,7 +123,10 @@ export function App() {
                         </Route>
                     </Route>
 
-                    <Route path="/retailer" element={<RetailerDashboard/>}>
+                    <Route path="/retailer" element={ <RetailerLayout />}>
+                        <Route index element={<RetailerDashboard/>}>
+
+                        </Route>
 
                     </Route>
                 </Routes>

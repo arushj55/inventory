@@ -1,5 +1,7 @@
 import { ControlledCarousel } from "../component/common/slider"
 import "./map.css"
+
+
 export function HomePage() {
     return (<>
         <div className="container-fluid " padding="5px">
@@ -48,5 +50,5 @@ export function HomePage() {
             </div>
         </div>
 
-    </>)
+        </>)
 }

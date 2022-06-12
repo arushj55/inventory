@@ -162,7 +162,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                   required
                                   type="number"
                                   placeholder="Bill Number"
-                                  defaultValue={order.bill_number}
+                                
                               />
                               <Form.Control.Feedback type="invalid">Order Number is required</Form.Control.Feedback>
                           </Form.Group>
@@ -226,7 +226,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                   placeholder="number" 
                                   onChange={handleChange}
                                   required
-                                  defaultValue={order.quantity}
+                                  
                               />
                               <Form.Control.Feedback type="invalid">
                                  Please provide a valid quantity

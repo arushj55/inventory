@@ -1,22 +1,20 @@
 import { NavLink } from "react-router-dom";
 import React from 'react';
-import { Chart } from "../admin/components/chart";
 import "../pages/map.css"
-
-export function AdminDashboard() {
-    let user = JSON.parse(localStorage.getItem('reactuser_user'));
-    let role = user.role;
+export function RetailerDashboard() {
+    
     return (
         <>
             <div className="container-fluid">
-                <h1 className="mt-4">Dashboard Page</h1>
-                <ol className="breadcrumb mb-4">
-                    <li className="breadcrumb-item">
-                        <NavLink to="/dashboard">Dashboard</NavLink>
-                    </li>
-                    <li className="breadcrumb-item active"></li>
-                </ol>
-
+                <div className="page-header">
+                    <h1 className="page-title">
+                        <span className="page-title-icon bg-gradient-primary text-white mr-2">
+                        <NavLink to="/retailer">
+                        <i className="fa-solid fa-house" style={{color:"white"}}></i>
+                        </NavLink>
+                        </span> Dashboard </h1>
+                        
+                </div>
                 <div className="row">
                     <div className="col-md-4 stretch-card grid-margin">
                         <div className="card bg-gradient-danger card-img-holder text-white">
@@ -56,20 +54,6 @@ export function AdminDashboard() {
 
 
 
-            </div>
-
-
-
-            <div className="container-fluid">
-            { 
-                        role && role == 'admin' 
-                            ? <><Chart /></>:
-                            
-                            <>
-                            
-                            </>
-            }
-                
             </div>
 
 
