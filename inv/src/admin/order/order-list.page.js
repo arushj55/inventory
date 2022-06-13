@@ -57,6 +57,7 @@ export function OrderList() {
                             <th>Retailer</th>
                             <th>Product</th>
                             <th>Status</th>
+                            <td>State</td>
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Sub Total</th>
@@ -73,6 +74,7 @@ export function OrderList() {
                                 <td>{o.retailer?.full_name}</td>
                                 <td>{o.product?.product_name}</td>
                                 <td>{o?.status}</td>
+                                <td>{o?.state}</td>
                                 <td>{o.quantity}</td>
                                 <td>{o.price}</td>
                                 <td>{o.sub_total}</td>

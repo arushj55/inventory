@@ -1,4 +1,6 @@
 import React from 'react';
+import { getItems } from "../../service/axios.service";
+import { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,29 +30,32 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+      text: 'Purchase and sales ratio',
     },
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
-export const data = {
+
+
+export function Chart(props) {
+  
+const labels = [props.date];
+
+ const data = {
   labels,
   datasets: [
     {
-      label: 'Dataset 1',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      label: 'Purchases',
+      data: labels.map(() => props.purchase),
+      backgroundColor: '#fd5667ad',
     },
     {
-      label: 'Dataset 2',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      label: 'Sales',
+      data: labels.map(() => props.sales),
+      backgroundColor: '#76d176',
     },
   ],
-};
-
-export function Chart() {
+};  
   return <Bar options={options} data={data} />;
 }

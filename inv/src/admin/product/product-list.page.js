@@ -5,7 +5,7 @@ import {toast} from "react-toastify";
 import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";
-import { NavLink, useNavigate } from "react-router-dom";
+
 export function ProductList(){
     const [data, setData] = useState([]);
 
@@ -38,7 +38,7 @@ export function ProductList(){
             toast.error(error);
         })
     }
-
+    console.log()
     return (<>
         <AdminPageTitle
             title="Product"
@@ -68,7 +68,8 @@ export function ProductList(){
                                 <td>{o.price_unit}</td>
                                 <td>{o.quantity}</td>
                                 <td>{o.supplier?.name}</td>
-                                <td>{new Date(o.createdAt).toLocaleDateString("en-US")}</td>
+                                <td>{new Date(o.createdAt).toLocaleString('default', { month: 'long' })}
+                                </td>
                                 <td>
                                     <ActionButton
                                         editLink={"/dashboard/product/"+o._id}

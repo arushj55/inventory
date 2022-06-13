@@ -7,7 +7,7 @@ router.route('/')
 .get(OrderCltr.Listall);
 
 router.route('/:id')
-.put(upload.none(),OrderCltr.updateproductbyid)
+.put(upload.none(),OrderCltr.updateorderbyid)
 .get(upload.none(),OrderCltr.getorderbyid)
 .delete(OrderCltr.deleteorderbyid);
 

@@ -25,6 +25,11 @@ const OrderSchema = new mongoose.Schema({
         enum:['purchase','sale'],
         default:'sale'
     },
+    state:{
+        type:String,
+        enum:['delivered','pending'],
+        default:'pending'
+    },
     quantity: {
         type: Number,
         required: true,

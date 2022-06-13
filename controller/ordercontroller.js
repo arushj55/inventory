@@ -70,10 +70,11 @@ class OrderController{
     }
 
 
-    updateproductbyid= (req,res,next)=>{
+    updateorderbyid= (req,res,next)=>{
         let data =req.body;
-        console.log("data",data)
-        product.updateOne({_id: req.params.id},{$set:data},(err,succ)=>{
+        console.log(req.params.id)
+        console.log("data here",data)
+        Order.updateOne({_id: req.params.id},{$set:data},(err,succ)=>{
             if(err){
                 console.log(err);
                 next({
