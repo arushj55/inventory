@@ -4,6 +4,7 @@ import { Chart } from "../admin/components/chart";
 import "../pages/map.css"
 import { getItems } from "../service/axios.service"
 import { useState } from "react";
+import { ContactTable } from "../component/common/contact";
 export function AdminDashboard() {
   let [sales, setSales] = useState()
   let [purchase, setPurchase] = useState()
@@ -21,12 +22,12 @@ export function AdminDashboard() {
       let p = 0;
       let c = 0;
       let d = 0;
-      let date=''
+      let date = ''
       let total = 0;
       let data = suc.data.result;
       let count = suc.data.result.length;
       for (let i = 0; i < count; i++) {
-        date=(new Date(data[i].createdAt).toLocaleString('default', { month: 'long' }))
+        date = (new Date(data[i].createdAt).toLocaleString('default', { month: 'long' }))
         if (data[i].status === "sale") {
           s++;
           total += data[i].sub_total
@@ -52,7 +53,7 @@ export function AdminDashboard() {
       console.log("error", err);
     })
 
-    getItems("/supplier/")
+  getItems("/supplier/")
     .then((suc) => {
       let count = suc.data.result.length;
       setSupplier(count);
@@ -61,7 +62,7 @@ export function AdminDashboard() {
       console.log("error", err);
     })
 
-    getItems("/product/")
+  getItems("/product/")
     .then((suc) => {
       let count = suc.data.result.length;
       setProduct(count);
@@ -70,7 +71,7 @@ export function AdminDashboard() {
       console.log("error", err);
     })
 
-  
+
 
   return (
     <>
@@ -85,7 +86,7 @@ export function AdminDashboard() {
 
         <div className="row">
           <div className="col-md-4 stretch-card grid-margin">
-            <div className="card bg-gradient-danger card-img-holder text-white">
+            <div className="card bg-gradient-info card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
                 <h4 className="font-weight-normal mb-3">Number of Supplier <i className="fa-solid fa-chart-line right"></i>
@@ -96,7 +97,7 @@ export function AdminDashboard() {
             </div>
           </div>
           <div className="col-md-4 stretch-card grid-margin">
-            <div className="card bg-gradient-danger card-img-holder text-white">
+            <div className="card bg-gradient-info card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
                 <h4 className="font-weight-normal mb-3">Number of Product <i className="fa-solid fa-chart-line right"></i>
@@ -107,7 +108,7 @@ export function AdminDashboard() {
           </div>
 
           <div className="col-md-4 stretch-card grid-margin">
-            <div className="card bg-gradient-danger card-img-holder text-white">
+            <div className="card bg-gradient-info card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
                 <h4 className="font-weight-normal mb-3">Pending Order <i className="fa-solid fa-chart-line right"></i>
@@ -118,7 +119,7 @@ export function AdminDashboard() {
           </div>
 
           <div className="col-md-4 stretch-card grid-margin">
-            <div className="card bg-gradient-danger card-img-holder text-white">
+            <div className="card bg-gradient-info card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
                 <h4 className="font-weight-normal mb-3">Delivered Order <i className="fa-solid fa-chart-line right"></i>
@@ -132,7 +133,7 @@ export function AdminDashboard() {
               ?
               <>
                 <div className="col-md-4 stretch-card grid-margin">
-                  <div className="card bg-gradient-danger card-img-holder text-white">
+                  <div className="card bg-gradient-info card-img-holder text-white">
                     <div className="card-body">
                       <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
                       <h4 className="font-weight-normal mb-3">Total Sales Amount <i className="fa-solid fa-chart-line right"></i>
@@ -146,26 +147,37 @@ export function AdminDashboard() {
               </>
           }
 
-
-
-
-
         </div>
       </div>
 
 
 
-      <div className="container-fluid">
-        {
-          role && role == 'admin'
-            ? <><Chart sales={sales} purchase={purchase} date={date} /></> :
+      <div className="container-fluid ">
+        <div className="row mt-5">
+          <div className="col-md-6">
+            {
+              role && role == 'admin'
+                ? <><Chart sales={sales} purchase={purchase} date={date} /></> :
 
-            <>
+                <>
 
-            </>
-        }
+                </>
+            }
+          </div>
+          <div className="col-md-6 stretch-card grid-margin">
+          <div class="card bg-gradient-info card-img-holder text-white">
+            <div class="card-body">
+            <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
+            <h4 className="font-weight-normal mb-3">Contact Table <i className="fa-solid fa-address-book"></i>
+                </h4>
+                        <ContactTable/>
+                </div>
+                </div>
+            </div>
 
-      </div>
+          </div>
+        </div>
+
 
 
     </>

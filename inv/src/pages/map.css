@@ -55,3 +55,7 @@
         float:right;
 }
 
+.bg-gradient-info {
+    background: -webkit-gradient(linear,left top,right top,from(#000000),color-stop(99%,#000000));
+    background: linear-gradient(90deg,#353535,#5c4b4b 99%);
+}

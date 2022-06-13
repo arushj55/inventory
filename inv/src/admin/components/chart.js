@@ -48,12 +48,12 @@ const labels = [props.date];
     {
       label: 'Purchases',
       data: labels.map(() => props.purchase),
-      backgroundColor: '#fd5667ad',
+      backgroundColor: 'red',
     },
     {
       label: 'Sales',
       data: labels.map(() => props.sales),
-      backgroundColor: '#76d176',
+      backgroundColor: 'green',
     },
   ],
 };  

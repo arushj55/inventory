@@ -35,7 +35,6 @@ export function SupplierFormComponent({ onHandleSubmit, supplier }) {
         let { value, name} = ev.target;
        
         setData((pre) => {
-            console.log("pre",pre);
             return {
                 ...pre,
                 [name]: value
@@ -57,7 +56,7 @@ export function SupplierFormComponent({ onHandleSubmit, supplier }) {
         })
         setValidated(true);
     }
-            console.log("supplier",supplier)
+            
     return (<>
         <Container>
               <Row className="mt-3">

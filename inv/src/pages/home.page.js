@@ -1,8 +1,41 @@
 import { ControlledCarousel } from "../component/common/slider"
+import {useState } from 'react';
 import "./map.css"
+import { postItem } from "../service/axios.service";
+import { useNavigate } from "react-router-dom";
+let defaultData = {
+    email: '',
+    message: '',
 
+}
 
 export function HomePage() {
+    let [data, setData] = useState(defaultData);
+    let navigate = useNavigate();
+  const handleChange = (ev) => {
+    let { name, value } = ev.target;
+
+    setData((pre) => {
+      return {
+        ...pre,
+        [name]: value
+      }
+    })
+
+  }
+  
+
+  const handleFormSubmit = (ev) => {
+    ev.preventDefault();
+    // axios call to server 
+    postItem("/contact/",data)
+        .then((suc)=>{
+            navigate("/login");
+        })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
     return (<>
         <div className="container-fluid " padding="5px">
             <ControlledCarousel />
@@ -35,20 +68,22 @@ export function HomePage() {
             <div className="color col-sm-6" style={{ backgroundImage: `url("https://traineeships.ec.europa.eu/sites/default/files/styles/eac_ratio_16_9_large/public/2021-06/contact-03.png?h=a955cd85&itok=Jp1BE4h6")` }}>
                 <h1 align="center" className="row-12" >Contact Us</h1>
                 <div>
-                    <form>
+                    <form onSubmit={handleFormSubmit}>
                         <div className="mb-3">
-                            <label className="form-label">Name</label>
-                            <input type="text" className="form-control" />
+                            <label htmlFor="exampleInputEmail1" className="form-label">Email Address</label>
+                            <input type="email" onChange={handleChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name='email' placeholder='email' required />
+
                         </div>
-                        <div className="form-floating mb-3">
-                            <textarea className="form-control" placeholder="Message" id="floatingTextarea"></textarea>
-                            <label for="floatingTextarea">Message</label>
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputPassword1" className="form-label">message</label>
+                            <textarea className="form-control" name="message"onChange={handleChange} placeholder="Message" id="floatingTextarea"></textarea>
+
                         </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <button type="submit" name="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
 
-        </>)
+    </>)
 }
