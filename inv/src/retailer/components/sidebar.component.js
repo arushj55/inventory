@@ -7,8 +7,8 @@ export function RetailerSidebar() {
             <div className="sb-sidenav-menu">
                 <div className="nav">
                     <div className="sb-sidenav-menu-heading">Features</div>
-                    <NavLink className="nav-link" to="/dashboard" style={{color:"black"}}>
-                        <div className="sb-nav-link-icon" style={{color:"#b66dff"}}><i className="fas fa-tachometer-alt"></i></div>
+                    <NavLink className="nav-link" to="/retailer" style={{color:"black"}}>
+                        <div className="sb-nav-link-icon" style={{color:"hsl(223, 97%, 69%)"}}><i className="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </NavLink>
                 </div>

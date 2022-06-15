@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { deleteItem, getItems } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
-import {toast} from "react-toastify";
+
 import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";
 
-import { useNavigate } from "react-router-dom";
 
 export function PaymentList(){
     const [data, setData] = useState([]);
-    let navigate = useNavigate();
+    
 
     const getAllPayments = async () => {
         try {
@@ -20,7 +19,7 @@ export function PaymentList(){
             }
         } catch(error) {
             // error handle
-            toast.error("Error while fetching payment data");
+            console.log(error);
         }
     }
     useEffect( () => {
@@ -31,14 +30,13 @@ export function PaymentList(){
         deleteItem('/payment/'+id, true)
         .then((res) => {
             if(res.data.status) {
-                toast.success(res.data.msg);
                 getAllPayments()
             } else {
-                toast.error(res.data.msg);
+                console.log(res.data.msg);
             }
         })
         .catch((error) => {
-            toast.error(error);
+            console.log(error);
         })
     }
 

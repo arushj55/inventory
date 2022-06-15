@@ -11,6 +11,7 @@ class PaymentController{
           }
           data.cheque_number = between(1,1234567891011)
           data.due_amount = data.total_amount - data.paid_amount;
+          data.total_amount = data.total_amount - data.paid_amount;
         let payment = Payment(data);
           console.log(payment)
             payment.save((err,suc)=>{

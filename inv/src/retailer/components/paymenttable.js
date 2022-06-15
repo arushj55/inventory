@@ -3,26 +3,25 @@ import { getItems } from '../../service/axios.service';
 import { useState,useEffect } from 'react';
 import BootStrapTable from 'react-bootstrap-table-next';
 import 'bootstrap/dist/css/bootstrap.min.css';
- export function InitialOrder() {
+ export function    PaymentTable() {
 
   let user = JSON.parse(localStorage.getItem('reactuser_user'));
 
   const [data, setData] = useState([]);
   const columns = [
     {dataField:'bill_number', text:"Bill Number"},
-    {dataField:'product.product_name', text:"Product", sort:true},
-    {dataField:'quantity', text:"Quantity"},
-    {dataField:'price', text:"Price"},
-    {dataField:'sub_total', text:"Total"}
+    {dataField:'cheque_number', text:"Cheque Number", sort:true},
+    {dataField:'paid_amount', text:"Amount"},
+    {dataField:'due_amount', text:"Due Amount"}
    
   ]
 
   let d=[];
     const getAllOrders = async () => {
       try {
-          let result = await getItems('/order/')
+          let result = await getItems('/payment/')
           for (let i = 0; i < result.data.result.length; i++) {
-            if (result.data.result[i].retailer.email === user.email) {
+            if (result.data.result[i].paid_by === user.email) {
                 d.push((result.data.result[i]));
             }
            setData(d);
@@ -42,7 +41,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   }, []);
   return(
     <>
-        <BootStrapTable keyField='_id' columns={columns} data={data} />
+        <BootStrapTable keyField='_id' columns={columns} data={data}/>
     </>
   )
 }

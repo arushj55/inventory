@@ -1,22 +1,24 @@
 
-import {  useState } from "react"
+import { useState } from "react"
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { getItems } from "../../service/axios.service";
 
 let default_data = {
-    bill_number:'',
-    cheque_number:'',
-    paid_by:'',
-    total_amount:'',
+    bill_number: '',
+    cheque_number: '',
+    paid_by: '',
+    total_amount: '',
     paid_amount: '',
-    due_amount:''
+    due_amount: ''
 };
 
 export function PaymentFormComponent({ onHandleSubmit, payment }) {
     let [err, setErr] = useState(default_data);
     let [data, setData] = useState();
+    let [amount, setAmount] = useState();
     let [validated, setValidated] = useState(false);
 
-    
+
 
     const submitForm = (event) => {
         const form = event.currentTarget;
@@ -35,8 +37,8 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
     }
 
     const handleChange = (ev) => {
-        let { value, name,type} = ev.target;
-       
+        let { value, name, type } = ev.target;
+
         setData((pre) => {
             return {
                 ...pre,
@@ -44,13 +46,19 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
             }
 
         });
-        validateData(name);
+        validateData(name, value);
     }
-    const validateData = (field) => {
+    const validateData = (field, value) => {
         let errMsg = '';
         switch (field) {
             case "paid_amount":
-                
+                console.log(amount)
+                if (value > amount) {
+                    errMsg = "Amount is higher then total value"
+                }
+                if (value === '') {
+                    errMsg = "Amount is required"
+                }
                 break
         }
 
@@ -63,46 +71,56 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
         })
         setValidated(true);
     }
+
+    getItems("/payment/")
+        .then((suc) => {
+            setAmount(suc.data.result[suc.data.result.length-1].due_amount)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     return (
-    
-    <>
-        <Container>
-              <Row className="mt-3">
-                  <Col>
-                      <h4 className="text-center">Payment Page</h4>
-                  </Col>
-              </Row>
-              <hr></hr>
-              <Row>
-                  <Col>
-                      
-                  <Form noValidate validated={validated} onSubmit={submitForm} className="center">
-                      
-                          
 
-                        <Row className="mb-3">
-                      <Form.Group as={Col} md="4" controlId="validationCustom01">
-                              <Form.Label>Paid Amount</Form.Label>
-                              <Form.Control
-                                  size="sm"
-                                  name="paid_amount"
-                                  required
-                                  onChange={handleChange}
-                                  type="number"
-                                  placeholder="Amount"
-                                  defaultValue=""
-                              />
-                              <Form.Control.Feedback type="invalid" >{err.paid_amount}</Form.Control.Feedback>
-                          </Form.Group>
-                      </Row>
+        <>
+            <Container>
+                <Row className="mt-3">
+                    <Col>
+                        <h4 className="text-center">Payment Page</h4>
+                    </Col>
+                </Row>
+                <hr></hr>
+                <Row>
+                    <Col>
+
+                        <Form noValidate validated={validated} onSubmit={submitForm} className="center">
 
 
-                          <Button type="submit">Submit form</Button>
-                      </Form>
-                  </Col>
-              </Row>
 
-              
-          </Container>
-    </>)
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="4" controlId="validationCustom01">
+                                    <Form.Label>Paid Amount</Form.Label>
+                                    <Form.Control
+                                        size="sm"
+                                        name="paid_amount"
+                                        required
+                                        onChange={handleChange}
+                                        type="number"
+                                        placeholder="Amount"
+                                        defaultValue=""
+                                    />
+                                    <span className='text-danger'>
+                                        {err.paid_amount}
+                                    </span>
+                                </Form.Group>
+                            </Row>
+
+
+                            <Button type="submit">Submit form</Button>
+                        </Form>
+                    </Col>
+                </Row>
+
+
+            </Container>
+        </>)
 }

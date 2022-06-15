@@ -129,10 +129,7 @@ export function App() {
                     </Route>
 
                     <Route path="/retailer" element={ <RetailerLayout />}>
-                        <Route index element={<RetailerDashboard/>}>
-
-                        </Route>
-
+                        <Route index element={<RetailerDashboard/>}></Route>
                     </Route>
                 </Routes>
             </BrowserRouter>

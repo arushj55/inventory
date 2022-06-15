@@ -22,8 +22,8 @@
     border: 0;
 }
 .bg-gradient-danger {
-    background: -webkit-gradient(linear,left top,right top,from(#ffbf96),to(#fe7096));
-    background: linear-gradient(90deg,#ffbf96,#fe7096);
+    background: -webkit-gradient(linear,left top,right top,from(#ffbf96),to(#aa4705));
+    background: linear-gradient(90deg,hsl(223, 97%, 69%),rgb(155, 154, 154));
 }
 
 .page-title {
