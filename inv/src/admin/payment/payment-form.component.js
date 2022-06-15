@@ -3,12 +3,12 @@ import {  useState } from "react"
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 let default_data = {
-    paymentname: '',
-    password: '',
-    full_name: '',
-    email: '',
-    address: '',
-    phone: '',
+    bill_number:'',
+    cheque_number:'',
+    paid_by:'',
+    total_amount:'',
+    paid_amount: '',
+    due_amount:''
 };
 
 export function PaymentFormComponent({ onHandleSubmit, payment }) {
@@ -49,8 +49,8 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
     const validateData = (field) => {
         let errMsg = '';
         switch (field) {
-            case "role":
-                errMsg = data['role'] != "staff" || data['role'] != 'retailer' ? 'Role is either retailer or staff' : '';
+            case "paid_amount":
+                
                 break
         }
 
@@ -79,139 +79,23 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
                   <Form noValidate validated={validated} onSubmit={submitForm} className="center">
                       
                           
-                          {!payment ? <>
-                            <Row className="mb-3">
-                          <Form.Group as={Col} md="8" controlId="validationCustom01">
-                              <Form.Label>Cheque Number</Form.Label>
-                              <Form.Control
-                                  size="sm"
-                                  name="paymentname"
-                                  onChange={handleChange}
-                                  required
-                                  type="text"
-                                  placeholder="Paymentname"
-                                  defaultValue=""
-                              />
-                              <Form.Control.Feedback type="invalid">PaymentName is required</Form.Control.Feedback>
-                          </Form.Group>
-                          </Row>
 
                         <Row className="mb-3">
-                      <Form.Group as={Col} md="4" controlId="validationCustom02">
-                              <Form.Label>Password</Form.Label>
+                      <Form.Group as={Col} md="4" controlId="validationCustom01">
+                              <Form.Label>Paid Amount</Form.Label>
                               <Form.Control
                                   size="sm"
-                                  name="password"
+                                  name="paid_amount"
                                   required
                                   onChange={handleChange}
-                                  type="password"
-                                  placeholder="password"
+                                  type="number"
+                                  placeholder="Amount"
                                   defaultValue=""
                               />
-                              <Form.Control.Feedback type="invalid" >Password is required</Form.Control.Feedback>
-                          </Form.Group>
-
-                          <Form.Group as={Col} md="4" controlId="validationCustom03">
-                              <Form.Label>Confirm-Password</Form.Label>
-                              <Form.Control
-                                  size="sm"
-                                  required
-                                  name="confirm-password"
-                                  type="password"
-                                  onChange={handleChange}
-                                  placeholder="password"
-                                  defaultValue=""
-                              />
-                              <Form.Control.Feedback type="invalid">Confirm Password does not match.</Form.Control.Feedback>
-                          </Form.Group>
-                      
-                      </Row>
-
-                      
-                      </> :<></> }
-                            <Row className="mb-3">
-                      <Form.Group as={Col} md="8" controlId="validationCustom04">
-                              <Form.Label>Full Name</Form.Label>
-                              <Form.Control
-                                  size="sm"
-                                  required
-                                  name="full_name"
-                                  type="text"
-                                  onChange={handleChange}
-                                  placeholder="Full Name"
-                                  defaultValue={payment?.full_name}
-                              />
-                              <Form.Control.Feedback type="invalid" >Full Name is required</Form.Control.Feedback>
-                          </Form.Group>
-                            </Row>
-                          <Row className="mb-3">
-                          <Form.Group as={Col} md="8" controlId="validationCustom05">
-                          <Form.Label>Email</Form.Label>
-                              <Form.Control 
-                                  type="text" 
-                                  name="email" 
-                                  placeholder="Email" 
-                                  onChange={handleChange}
-                                  required
-                                  defaultValue={payment?.email}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  Please provide a valid Email.
-                              </Form.Control.Feedback>
+                              <Form.Control.Feedback type="invalid" >{err.paid_amount}</Form.Control.Feedback>
                           </Form.Group>
                       </Row>
 
-                      <Row className="mb-3">
-                          <Form.Group as={Col} md="8" controlId="validationCustom06">
-                              <Form.Label>Role</Form.Label>
-                                  <Form.Select
-                                      aria-label="Role" 
-                                      name="role"
-                                      onChange={handleChange}
-                                  >
-                                      <option value="staff" selected={payment?.role == 'staff' ? true : false}>Staff</option>
-                                      <option value="retailer" selected={payment?.role == 'retailer' ? true : false}>Retailer</option>
-                                  </Form.Select>
-                              <Form.Control.Feedback type="invalid">{
-                                  err['role'] ?? 'Role is required'
-                              }</Form.Control.Feedback>
-                          </Form.Group>
-                      </Row>
-
-
-                      <Row className="mb-3">
-                          <Form.Group as={Col} md="8" controlId="validationCustom07">
-                          <Form.Label>Address</Form.Label>
-                              <Form.Control 
-                                  type="text" 
-                                  name="address" 
-                                  placeholder="City" 
-                                  onChange={handleChange}
-                                  required 
-                                  defaultValue={payment?.address}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  Please provide a valid Address.
-                              </Form.Control.Feedback>
-                          </Form.Group>
-                      </Row>
-                        
-                      <Row className="mb-3">
-                          <Form.Group as={Col} md="8" controlId="validationCustom08">
-                          <Form.Label>Mobile Number</Form.Label>
-                              <Form.Control 
-                                  type="number" 
-                                  name="phone"
-                                  placeholder="Number" 
-                                  required 
-                                  onChange={handleChange}
-                                  defaultValue={payment?.phone}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                  Please provide a valid Number.
-                              </Form.Control.Feedback>
-                          </Form.Group>
-                      </Row>
 
                           <Button type="submit">Submit form</Button>
                       </Form>

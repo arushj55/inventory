@@ -70,7 +70,6 @@ export function Login() {
           let user = data.result.User;
           localStorage.setItem("reactuser_token", token);
           localStorage.setItem("reactuser_user", JSON.stringify({
-            id: user._id,
             name: user.full_name,
             email: user.email,
             password: user.password,
@@ -79,7 +78,6 @@ export function Login() {
 
           sessionStorage.setItem('reactuser_token', token);
           sessionStorage.setItem('reactuser_user', JSON.stringify({
-            id: user._id,
             name: user.full_name,
             email: user.email,
             role: user.role

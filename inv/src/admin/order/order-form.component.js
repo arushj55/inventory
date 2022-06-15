@@ -21,6 +21,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
     let [err, setErr] = useState(default_data);
     let [data, setData] = useState();
     let [price, setPrice] = useState();
+    let [qty, setQuantity] = useState();
     let [supplier, setSupplier] = useState();
     let [retailer, setRetailer] = useState();
     let [product, setProduct] = useState();
@@ -54,17 +55,29 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
             }
 
         });
-        validateData(name);
+        validateData(name, value);
     }
-    const validateData = (field) => {
-        let errMsg = '';
 
+    const validateData = (field, value) => {
+        let errMsg = '';
         switch (field) {
+
             case "status":
-                errMsg = data['status'] != "purchase" || data['status'] != 'sale' ? 'status is either sale or purchase' : '';
+                errMsg = value != "purchase" || value != 'sale' ? 'status is either sale or purchase' : '';
                 break
             case "state":
-                errMsg = data['state'] != "delivered" || data['state'] != 'pending' ? 'state is either delivered or pending' : '';
+                errMsg = value != "delivered" || value != 'pending' ? 'state is either delivered or pending' : '';
+                break
+            case "quantity":
+                        if(value > qty)
+                        {
+                            errMsg="Quantity is higher than stock value"
+                        }
+                        if(value === '')
+                        {
+                            errMsg="Quantity is required"
+                        }
+                        
                 break
         }
 
@@ -101,7 +114,8 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
         let products = result.data.result.map((o) => ({
             label: o.product_name,
             value: o._id,
-            price: o.price_unit
+            price: o.price_unit,
+            quantity: o.quantity
         }))
         setProduct(products)
     }
@@ -137,9 +151,9 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
 
     useEffect(() => {
         setPrice(default_product?.price)
+        setQuantity(default_product?.quantity)
     }, [default_product])
-
-
+    console.log(err.quantity)
     return (
 
         <>
@@ -161,24 +175,9 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                 role && role === "admin"
                                     ?
                                     <>
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} md="8" controlId="validationCustom01">
-                                                <Form.Label>Bill Number</Form.Label>
-                                                <Form.Control
-                                                    size="sm"
-                                                    name="bill_number"
-                                                    onChange={handleChange}
-                                                    required
-                                                    type="number"
-                                                    placeholder="Bill Number"
-
-                                                />
-                                                <Form.Control.Feedback type="invalid">Order Number is required</Form.Control.Feedback>
-                                            </Form.Group>
-                                        </Row>
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} md="4" controlId="validationCustom02">
+                                            <Form.Group as={Col} md="4" controlId="validationCustom01">
                                                 <Form.Label>Supplier</Form.Label>
                                                 <Select
                                                     value={default_supplier}
@@ -187,7 +186,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                                 />
                                             </Form.Group>
 
-                                            <Form.Group as={Col} md="4" controlId="validationCustom03">
+                                            <Form.Group as={Col} md="4" controlId="validationCustom02">
                                                 <Form.Label>Retailer</Form.Label>
                                                 <Select
                                                     value={default_retailer}
@@ -199,7 +198,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} md="8" controlId="validationCustom05">
+                                            <Form.Group as={Col} md="8" controlId="validationCustom03">
                                                 <Form.Label>product</Form.Label>
                                                 <Select
                                                     value={default_product}
@@ -210,7 +209,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} md="8" controlId="validationCustom06">
+                                            <Form.Group as={Col} md="8" controlId="validationCustom04">
                                                 <Form.Label>Status</Form.Label>
                                                 <Form.Select
                                                     aria-label="Status"
@@ -226,25 +225,26 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                             </Form.Group>
                                         </Row>
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} md="8" controlId="validationCustom06">
+                                            <Form.Group as={Col} md="8" controlId="validationCustom05">
                                                 <Form.Label>Quantity</Form.Label>
                                                 <Form.Control
-                                                    type="text"
+                                                    type="number"
                                                     name="quantity"
-                                                    placeholder="number"
                                                     onChange={handleChange}
+                                                    defaultValue={qty}
                                                     required
 
                                                 />
-                                                <Form.Control.Feedback type="invalid">
-                                                    Please provide a valid quantity
-                                                </Form.Control.Feedback>
+                                                
                                             </Form.Group>
+                                            <span className='text-danger'>
+                                                {err.quantity}
+                                            </span>
                                         </Row>
 
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} md="8" controlId="validationCustom07">
+                                            <Form.Group as={Col} md="8" controlId="validationCustom06">
                                                 <Form.Label>Price</Form.Label>
                                                 <Form.Control
                                                     type="number"
@@ -266,7 +266,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                     :
                                     <>
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} md="8" controlId="validationCustom06">
+                                            <Form.Group as={Col} md="8" controlId="validationCustom07">
                                                 <Form.Label>State</Form.Label>
                                                 <Form.Select
                                                     aria-label="State"

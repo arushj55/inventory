@@ -2,7 +2,7 @@ import { ControlledCarousel } from "../component/common/slider"
 import {useState } from 'react';
 import "./map.css"
 import { postItem } from "../service/axios.service";
-import { useNavigate } from "react-router-dom";
+import { Toast, ToastContainer } from "react-bootstrap";
 let defaultData = {
     email: '',
     message: '',
@@ -11,7 +11,6 @@ let defaultData = {
 
 export function HomePage() {
     let [data, setData] = useState(defaultData);
-    let navigate = useNavigate();
   const handleChange = (ev) => {
     let { name, value } = ev.target;
 
@@ -25,18 +24,18 @@ export function HomePage() {
   }
   
 
-  const handleFormSubmit = (ev) => {
-    ev.preventDefault();
+  const handleFormSubmit = () => {
     // axios call to server 
     postItem("/contact/",data)
         .then((suc)=>{
-            navigate("/login");
+            Toast.success("Contact Send")
         })
       .catch((err) => {
         console.log(err)
       })
   }
     return (<>
+            <ToastContainer/>
         <div className="container-fluid " padding="5px">
             <ControlledCarousel />
         </div>

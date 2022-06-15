@@ -1,29 +1,61 @@
 import { NavLink } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getItems } from "../service/axios.service";
 import "../pages/map.css"
+import InitialOrder from "./components/tablecomp";
 export function RetailerDashboard() {
     let [total,setTotal]=useState()
+    let [due,setdue]=useState()
     let [count,setCount]=useState()
     let user = JSON.parse(localStorage.getItem('reactuser_user'));
-    getItems("/order/")
-        .then((suc) => {
-            let total=0;
-            let c=0;
-            let data = suc.data.result;
-            let count = suc.data.result.length;
+    let t=0;
+    let c=0;
+    let d=0;
+        
+        const getAllOrder = async () => {
+            try{
+            let res = await getItems('/order/')
+            let data =res.data.result;
+            let count = res.data.result.length;
             for (let i = 0; i < count; i++) {
-                if (data[i].retailer._id === user.id) {
-                    total+=data[i].sub_total;
+                if (data[i].retailer.email === user.email) {
+                    t+=data[i].sub_total;
                     c++;
                 }
-                setTotal(total);
+                
+                setTotal(t);
                 setCount(c);
             }
-        })
-        .catch((err) => {
-            console.log("error", err);
-        })
+        }
+        catch(error){
+            console.log(error)
+        }
+            
+        }
+        
+        const getAllPayment = async () => {
+            try{
+            let res = await getItems('/payment/')
+            console.log(res.data.result);
+            let data =res.data.result;
+            let count = res.data.result.length;
+            for (let i = 0; i < count; i++) {
+                if (data[i].paid_by === user.email) {
+                    d+=data[i].due_amount;
+                }
+                setdue(d);
+            }
+        }
+        catch(error){
+            console.log(error)
+        }
+            
+        }
+  
+        useEffect(() => {
+            getAllOrder();
+            getAllPayment();
+        }, [])
     return (
         <>
             <div className="container-fluid">
@@ -64,16 +96,22 @@ export function RetailerDashboard() {
                                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
                                 <h4 className="font-weight-normal mb-3">Due Amount <i className="fa-solid fa-chart-line right"></i>
                                 </h4>
-                                <h2 className="mb-5">Rs.15000</h2>
+                                <h2 className="mb-5">Rs.{due}</h2>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className="col-md-12 stretch-card grid-margin">
+                        <div className="card bg-gradient-danger card-img-holder text-white">
+                            <div className="card-body">
+                                <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
+                                <InitialOrder/>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
-
 
         </>
     );

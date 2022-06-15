@@ -6,9 +6,13 @@ import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";
 import { NavLink } from "react-router-dom";
+import { PdfGenerator } from "../components/pdf";
+import { Button } from "react-bootstrap";
 
 
 export function OrderList() {
+    let user = JSON.parse(localStorage.getItem('reactuser_user'));
+    let role = user.role;
     const [data, setData] = useState([]);
     const getAllOrders = async () => {
         try {
@@ -39,7 +43,9 @@ export function OrderList() {
                 toast.error(error);
             })
     }
+
     return (<>
+
         <AdminPageTitle
             title="Order"
             bread_crumb="Order List"
@@ -62,7 +68,17 @@ export function OrderList() {
                             <th>Price</th>
                             <th>Sub Total</th>
                             <th>Action</th>
-                            <th>Payment</th>
+                            {
+                                role && role == 'admin'
+                                    ?
+                                    <>
+                                        <th>Payment</th>
+                                    </> :
+                                    <>
+                                    </>
+                            }
+                            <th>Pdf</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -86,11 +102,25 @@ export function OrderList() {
                                         onDelete={onDelete}
                                     />
                                 </td>
-                                <td>
-                                    <NavLink onClick='' to="/dashboard/transaction/create" className="btn btn-sm btn-dark btn-rounded" >
-                                        <i className="fa-solid fa-money-check"></i>
-                                    </NavLink>
-                                </td>
+                                {
+                                    role && role == 'admin'
+                                        ?
+                                        <>
+                                            <td>
+                                                <NavLink to={"/dashboard/transaction/create" + o._id} className="btn btn-sm btn-dark btn-rounded" >
+                                                    <i className="fa-solid fa-money-check"></i>
+                                                </NavLink>
+                                            </td>
+
+                                            <td>
+                                                <NavLink to={"/dashboard/pdf" + o._id} className="btn btn-sm btn-success btn-rounded"><i class="fa-solid fa-file-pdf"></i></NavLink>
+                                            </td>
+
+                                        </> :
+                                        <>
+                                        </>
+                                }
+
                             </tr>
                         ))}
                     </tbody>

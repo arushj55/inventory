@@ -11,11 +11,13 @@ export function OrderCreate(){
 
     const addOrder = async (data) => {
         let quantity =0;
+        console.log("id",data)
         try {
             let response = await postItem('/order',data,true)
             if(response.status){
                 let response = await uploader('get', 'product/'+ data.product)
                 let value=response.result
+                
                 if(data.status === 'purchase')
                 {
                      quantity = Number(value.quantity)+Number(data.quantity);
@@ -24,12 +26,11 @@ export function OrderCreate(){
                         quantity = Number(value.quantity)-Number(data.quantity);
                     }
 
-                    console.log("here quantity",quantity)
+                    console.log("here quantity",data.product)
                     let res = await uploader('put', 'product/'+ data.product,quantity)
                     {
                         console.log(res)
                         if(res.status){
-                           console.log(res.msg)
                             navigate('/dashboard/order');
                         }
                     }

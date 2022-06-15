@@ -4,6 +4,7 @@ const productroutes = require("./productroutes");
 const authroutes = require("./authroute");
 const orderroutes = require("./orderroute");
 const contactroute = require("./contactroute");
+const paymentroute = require("./paymentroutes");
 const express = require("express");
 
 const app = express();
@@ -14,5 +15,6 @@ app.use("/supplier",supplierroutes);
 app.use("/product",productroutes);
 app.use("/order",orderroutes);
 app.use("/contact",contactroute);
+app.use("/payment",paymentroute);
 
 module.exports = app;

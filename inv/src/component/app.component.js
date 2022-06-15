@@ -33,6 +33,7 @@ import {
 
 } from "../admin";
 import { RetailerLayout } from "../layout/retailer.layout";
+import { PdfGenerator } from "../admin/components/pdf";
 function Home() {
     return (<>
         <Header></Header>
@@ -118,9 +119,13 @@ export function App() {
 
                         <Route path="Transaction" element={<PaymentPage />}>
                             <Route index element={<PaymentList />}></Route>
-                            <Route path="create" element={<PaymentCreate />}></Route>
+                            <Route path="create:id" element={<PaymentCreate />}></Route>
                             <Route path=":id" element={<PaymentEdit />}></Route>
                         </Route>
+
+                        <Route path="pdf:id" element={<PdfGenerator/>}>
+                        </Route>
+
                     </Route>
 
                     <Route path="/retailer" element={ <RetailerLayout />}>

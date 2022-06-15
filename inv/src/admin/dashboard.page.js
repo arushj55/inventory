@@ -5,6 +5,7 @@ import "../pages/map.css"
 import { getItems } from "../service/axios.service"
 import { useState } from "react";
 import { ContactTable } from "../component/common/contact";
+import { OTable } from "./components/table";
 export function AdminDashboard() {
   let [sales, setSales] = useState()
   let [purchase, setPurchase] = useState()
@@ -12,6 +13,7 @@ export function AdminDashboard() {
   let [pending, setPending] = useState()
   let [delivered, setDelivered] = useState()
   let [date, setDate] = useState()
+  let [due, setDue] = useState()
   let [supplier, setSupplier] = useState()
   let [product, setProduct] = useState()
   let user = JSON.parse(localStorage.getItem('reactuser_user'));
@@ -67,6 +69,19 @@ export function AdminDashboard() {
       let count = suc.data.result.length;
       setProduct(count);
     })
+    .catch((err) => {
+      console.log("error", err);
+    })
+    getItems("/payment/")
+    .then((suc) => {
+      let due = 0;
+      for(let i=0;i<suc.data.result.length;i++)
+      {
+        due += suc.data.result[i].due_amount
+      }
+      setDue(due);
+    })
+
     .catch((err) => {
       console.log("error", err);
     })
@@ -142,6 +157,17 @@ export function AdminDashboard() {
                     </div>
                   </div>
                 </div>
+
+                <div className="col-md-4 stretch-card grid-margin">
+                  <div className="card bg-gradient-info card-img-holder text-white">
+                    <div className="card-body">
+                      <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
+                      <h4 className="font-weight-normal mb-3">Receivable Amount <i className="fa-solid fa-chart-line right"></i>
+                      </h4>
+                      <h2 className="mb-5">Rs.{due}</h2>
+                    </div>
+                  </div>
+                </div>
               </> :
               <>
               </>
@@ -150,33 +176,48 @@ export function AdminDashboard() {
         </div>
       </div>
 
-
-
       <div className="container-fluid ">
         <div className="row mt-5">
-          <div className="col-md-6">
-            {
-              role && role == 'admin'
-                ? <><Chart sales={sales} purchase={purchase} date={date} /></> :
-
-                <>
-
-                </>
-            }
-          </div>
-          <div className="col-md-6 stretch-card grid-margin">
-          <div class="card bg-gradient-info card-img-holder text-white">
-            <div class="card-body">
-            <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
-            <h4 className="font-weight-normal mb-3">Contact Table <i className="fa-solid fa-address-book"></i>
-                </h4>
-                        <ContactTable/>
+          {
+            role && role === "admin"
+              ?
+              <>
+              <div className="col-md-12 stretch-card grid-margin">
+                  <div class="card bg-gradient-info card-img-holder text-white">
+                    <div class="card-body">
+                      <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
+                      <h4 className="font-weight-normal mb-3">Contact Table <i className="fa-solid fa-address-book"></i>
+                      </h4>
+                      <ContactTable />
+                    </div>
+                  </div>
                 </div>
-                </div>
-            </div>
 
-          </div>
+                <div className="col-md-12">
+                  <Chart sales={sales} purchase={purchase} date={date} />
+                </div>
+                
+
+
+              </> :
+              <>
+                <div className="col-md-12 stretch-card grid-margin">
+                  <div class="card bg-gradient-info card-img-holder text-white">
+                    <div class="card-body">
+                      <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
+                      <h4 className="font-weight-normal mb-3">Order Table <i className="fa-solid fa-address-book"></i>
+                      </h4>
+                      <OTable/>
+                    </div>
+                  </div>
+                </div>
+
+              </>
+
+          }
         </div>
+      </div>
+
 
 
 

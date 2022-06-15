@@ -1,19 +1,19 @@
-const Order = require("../model/order.model");
-class OrderController{
-    createOrder = (req, res, next) => {
+const Payment = require("../model/payment.model");
+const OrderController = require("./ordercontroller")
+const OrderCltr = new OrderController;
+class PaymentController{
+    createPayment = (req, res, next) => {
         let data = req.body;
         function between(min, max) {  
             return Math.floor(
               Math.random() * (max - min + 1) + min
             )
           }
-          
-        data.bill_number = between(1,1234567890)
-        data.sub_total = data.price*data.quantity;
-
-        let order = Order(data);
-
-            order.save((err,suc)=>{
+          data.cheque_number = between(1,1234567891011)
+          data.due_amount = data.total_amount - data.paid_amount;
+        let payment = Payment(data);
+          console.log(payment)
+            payment.save((err,suc)=>{
                 if(err){
                     console.log(err);
                     res.json({
@@ -26,7 +26,7 @@ class OrderController{
                     res.json({
                         result:suc,
                         status: true,
-                        msg:"order inserted successfully..."
+                        msg:"payment inserted successfully..."
                     })
                 }
             })
@@ -34,10 +34,7 @@ class OrderController{
     }
 
     Listall= (req,res,next)=>{
-        Order.find()
-        .populate('supplier')
-        .populate('retailer')
-        .populate('product')
+        Payment.find()
         .then((succ)=>{
             res.json({
                 result: succ,
@@ -55,11 +52,8 @@ class OrderController{
         })
     }
 
-    getorderbyid= (req,res,next)=>{
-        Order.findById({_id: req.params.id})
-        .populate('supplier')
-        .populate('retailer')
-        .populate('product')
+    getpaymentbyid= (req,res,next)=>{
+        Payment.findById({_id: req.params.id})
         .then((succ)=>{
             res.json({
                 result: succ,
@@ -78,9 +72,10 @@ class OrderController{
     }
 
 
-    updateorderbyid= (req,res,next)=>{
+    updatepaymentbyid= (req,res,next)=>{
         let data =req.body;
-        Order.updateOne({_id: req.params.id},{$set:data},(err,succ)=>{
+        console.log("data",data)
+        Payment.updateOne({_id: req.params.id},{$set:data},(err,succ)=>{
             if(err){
                 console.log(err);
                 next({
@@ -99,8 +94,8 @@ class OrderController{
         })
     }
 
-    deleteorderbyid= (req,res,next)=>{
-            Order.deleteOne({_id: req.params.id},(err,succ)=>{
+    deletepaymentbyid= (req,res,next)=>{
+            Payment.deleteOne({_id: req.params.id},(err,succ)=>{
             if(err){
                 next({
                     statuscode:400,
@@ -118,4 +113,4 @@ class OrderController{
     }
 }
 
-module.exports = OrderController;
+module.exports = PaymentController;

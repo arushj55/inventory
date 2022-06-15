@@ -10,12 +10,15 @@ export function PaymentEdit(){
     let params = useParams();
     let [payment, setPayment] = useState();
 
-    const editPayment = async (data, file) => {
+    const editPayment = async (data) => {
+        data.paid_amount = Number(data.paid_amount)+Number(payment.paid_amount);
+        data.due_amount = Number(payment.total_amount)- Number(data.paid_amount);
+        console.log(data.due_amount)
         try {
-            let response = await uploader('put', 'payment/'+ payment._id, data, file)
+            let response = await uploader('put', 'payment/'+ payment._id, data)
             if(response.status){
                 toast.success(response.msg);
-                navigate('/dashboard/payment');
+                navigate('/dashboard/Transaction');
             }
         } catch(error) {
             toast.error("Error while updating data...");
@@ -28,9 +31,8 @@ export function PaymentEdit(){
             setPayment(response.data.result);
         })
         .catch((error) => {
-            toast.error(error.response.msg)
-            navigate('/dashboard/payment');
-            // navigate(-1);
+            console.log(error.response.msg)
+            navigate(-1);
         })
     }, []);
     return (<>
