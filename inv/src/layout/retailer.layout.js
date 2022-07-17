@@ -1,7 +1,6 @@
-import { Outlet, resolvePath } from "react-router-dom";
+import { Outlet} from "react-router-dom";
 import "../assets/css/styles.css";
 import "bootstrap/dist/js/bootstrap.bundle";
-// import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import { RetailerTopNav, RetailerSidebar, RetailerFooter } from "../retailer/components";
 

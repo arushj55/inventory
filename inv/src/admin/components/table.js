@@ -1,6 +1,5 @@
 import { useState,useEffect } from "react";
-import { deleteItem,getItems } from "../../service/axios.service";
-import { ActionButton } from "../../component/action-button/action-button.component";
+import { getItems } from "../../service/axios.service";
 import "../../pages/map.css"
 export function OTable(){
     const [data, setData] = useState([]);
@@ -17,21 +16,6 @@ export function OTable(){
     useEffect(() => {
         getAllOrders()
     }, []);
-
-    const onDelete = (id) => {
-        deleteItem('/order/' + id, true)
-            .then((res) => {
-                if (res.data.status) {
-                    console.log(res.data.msg);
-                    getAllOrders()
-                } else {
-                    console.log(res.data.msg);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }
     return (<>
         
                 <table className="table table-hover table-bordered table-sm">

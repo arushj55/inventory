@@ -34,6 +34,9 @@ import {
 } from "../admin";
 import { RetailerLayout } from "../layout/retailer.layout";
 import { PdfGenerator } from "../admin/components/pdf";
+import { Generator } from "../retailer/components/pdf";
+import {Reset} from "../pages/Rest-password/reset-password";
+import {ChangePassword} from "../pages/Rest-password/change-password";
 function Home() {
     return (<>
         <Header></Header>
@@ -88,6 +91,8 @@ export function App() {
                     <Route path='/' element={<Home />}>
                         <Route index element={<HomePage />}></Route>
                         <Route path='login' element={<Login />}></Route>
+                        <Route path="reset-password" element={<Reset/>}/>
+                        <Route path="change-password" element={<ChangePassword/>}></Route>
                     </Route>
 
                     <Route path="/dashboard" element={<AdminPrivateRoutes component={<AdminLayout />}></AdminPrivateRoutes>}>
@@ -130,6 +135,7 @@ export function App() {
 
                     <Route path="/retailer" element={ <RetailerLayout />}>
                         <Route index element={<RetailerDashboard/>}></Route>
+                        <Route path="pdf" element={<Generator/>}></Route>
                     </Route>
                 </Routes>
             </BrowserRouter>

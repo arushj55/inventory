@@ -21,7 +21,7 @@ export function ProductFormComponent({ onHandleSubmit, product }) {
     let role = user.role;
 
     const handleChange = (ev) => {
-        let { name, type, value, files } = ev.target;
+        let { name, value } = ev.target;
     
         setData((pre) => {
             return {

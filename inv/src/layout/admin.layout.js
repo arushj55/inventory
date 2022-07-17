@@ -1,7 +1,7 @@
 import { Outlet, resolvePath } from "react-router-dom";
 import "../assets/css/styles.css";
 import "bootstrap/dist/js/bootstrap.bundle";
-// import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 import { AdminTopNav, AdminSidebar, AdminFooter } from "../admin/components";
 

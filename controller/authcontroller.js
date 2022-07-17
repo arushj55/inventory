@@ -24,8 +24,9 @@ class AuthController{
             // password: req.body.password
         })
         .then((response) => {
+            
             // password check 
-
+           
             if(response){
                 // validate password. 
 
@@ -39,6 +40,7 @@ class AuthController{
                     // jwt, passport 
                     // json web token
                     // bearer token
+                    
                     res.status(200).json({
                         result: {
                             User: response,
@@ -54,6 +56,7 @@ class AuthController{
                         msg: "Login successfull"
                     })
                 } else {
+                    console.log(res)
                     next({
                         status: 400,
                         msg: "Credentials does not match"

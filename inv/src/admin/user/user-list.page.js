@@ -23,7 +23,7 @@ export function UserList(){
             let result = await getItems('/user/')
             if(result.data.result){
 
-                let user_data = result.data.result.filter((o) => (o._id != logged_in_user.id))
+                let user_data = result.data.result.filter((o) => (o._id !== logged_in_user.id))
                 setData(user_data)
             }
         } catch(error) {
@@ -33,7 +33,7 @@ export function UserList(){
     }
     useEffect( () => {
         getAllUsers()
-    }, []);
+    });
 
     const onDelete = (id) => {
         deleteItem('/user/'+id, true)

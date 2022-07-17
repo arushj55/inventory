@@ -22,7 +22,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       try {
           let result = await getItems('/order/')
           for (let i = 0; i < result.data.result.length; i++) {
-            if (result.data.result[i].retailer.email === user.email) {
+            if (result.data.result[i].retailer.email ===  user.email) {
                 d.push((result.data.result[i]));
             }
            setData(d);
@@ -39,7 +39,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
  
   useEffect(() => {
       getAllOrders()
-  }, []);
+  },[]);
   return(
     <>
         <BootStrapTable keyField='_id' columns={columns} data={data} />

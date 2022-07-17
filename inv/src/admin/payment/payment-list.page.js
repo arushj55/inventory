@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { deleteItem, getItems } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
-
 import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";

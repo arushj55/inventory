@@ -52,8 +52,11 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
         let errMsg = '';
         switch (field) {
             case "paid_amount":
-                console.log(amount)
-                if (value > amount) {
+                if(amount == 0)
+                {
+                    break;
+                }
+                if (value > amount ) {
                     errMsg = "Amount is higher then total value"
                 }
                 if (value === '') {

@@ -38,7 +38,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
  
   useEffect(() => {
       getAllOrders()
-  }, []);
+  },[user]);
   return(
     <>
         <BootStrapTable keyField='_id' columns={columns} data={data}/>

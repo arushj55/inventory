@@ -70,7 +70,7 @@ const uploader = (method,url, data, file= [], is_strict=false) => {
 
         xhr.onreadystatechange = function() {
             let response =null;
-            if(this.readyState == 4){
+            if(this.readyState === 4){
                 if(typeof this.response != "object"){
                     response = JSON.parse(this.response);
                 }

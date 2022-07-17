@@ -8,7 +8,7 @@ class OrderController{
             )
           }
           
-        data.bill_number = between(1,1234567890)
+        data.bill_number = between(1,123456)
         data.sub_total = data.price*data.quantity;
 
         let order = Order(data);

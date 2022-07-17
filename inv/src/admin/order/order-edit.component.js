@@ -30,7 +30,6 @@ export function OrderEdit(){
         .catch((error) => {
             toast.error(error.response.msg)
             navigate('/dashboard/order');
-            // navigate(-1);
         })
     }, []);
     return (<>

@@ -6,8 +6,6 @@ import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";
 import { NavLink } from "react-router-dom";
-import { PdfGenerator } from "../components/pdf";
-import { Button } from "react-bootstrap";
 
 
 export function OrderList() {
@@ -69,7 +67,7 @@ export function OrderList() {
                             <th>Sub Total</th>
                             <th>Action</th>
                             {
-                                role && role == 'admin'
+                                role && role === 'admin'
                                     ?
                                     <>
                                         <th>Payment</th>

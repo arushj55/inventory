@@ -3,8 +3,7 @@ const bcrypt = require("bcrypt");
 
 
 class UserController{
-
-
+    
     registeruser = (req,res,next) =>{
         let data= req.body;
         bcrypt.hash(req.body.password, 10).then((hashed) => {

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Chart } from "../admin/components/chart";
 import "../pages/map.css"
 import { getItems } from "../service/axios.service"

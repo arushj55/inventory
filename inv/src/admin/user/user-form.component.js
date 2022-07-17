@@ -35,7 +35,7 @@ export function UserFormComponent({ onHandleSubmit, user }) {
     }
 
     const handleChange = (ev) => {
-        let { value, name,type} = ev.target;
+        let { value, name} = ev.target;
        
         setData((pre) => {
             return {
@@ -50,7 +50,7 @@ export function UserFormComponent({ onHandleSubmit, user }) {
         let errMsg = '';
         switch (field) {
             case "role":
-                errMsg = data['role'] != "staff" || data['role'] != 'retailer' ? 'Role is either retailer or staff' : '';
+                errMsg = data['role'] !== "staff" || data['role'] !== 'retailer' ? 'Role is either retailer or staff' : '';
                 break
         }
 
@@ -96,6 +96,7 @@ export function UserFormComponent({ onHandleSubmit, user }) {
                           </Form.Group>
                           </Row>
 
+                          
                         <Row className="mb-3">
                       <Form.Group as={Col} md="4" controlId="validationCustom02">
                               <Form.Label>Password</Form.Label>
@@ -106,11 +107,12 @@ export function UserFormComponent({ onHandleSubmit, user }) {
                                   onChange={handleChange}
                                   type="password"
                                   placeholder="password"
-                                  defaultValue=""
+                                  defaultValue=''
                               />
                               <Form.Control.Feedback type="invalid" >Password is required</Form.Control.Feedback>
                           </Form.Group>
 
+                        
                           <Form.Group as={Col} md="4" controlId="validationCustom03">
                               <Form.Label>Confirm-Password</Form.Label>
                               <Form.Control
@@ -124,11 +126,12 @@ export function UserFormComponent({ onHandleSubmit, user }) {
                               />
                               <Form.Control.Feedback type="invalid">Confirm Password does not match.</Form.Control.Feedback>
                           </Form.Group>
-                      
-                      </Row>
+                    
 
+                        
+                            </Row>
+                            </> :<></> }
                       
-                      </> :<></> }
                             <Row className="mb-3">
                       <Form.Group as={Col} md="8" controlId="validationCustom04">
                               <Form.Label>Full Name</Form.Label>
@@ -169,8 +172,8 @@ export function UserFormComponent({ onHandleSubmit, user }) {
                                       name="role"
                                       onChange={handleChange}
                                   >
-                                      <option value="staff" selected={user?.role == 'staff' ? true : false}>Staff</option>
-                                      <option value="retailer" selected={user?.role == 'retailer' ? true : false}>Retailer</option>
+                                      <option value="staff" selected={user?.role === 'staff' ? true : false}>Staff</option>
+                                      <option value="retailer" selected={user?.role === 'retailer' ? true : false}>Retailer</option>
                                   </Form.Select>
                               <Form.Control.Feedback type="invalid">{
                                   err['role'] ?? 'Role is required'

@@ -1,7 +1,6 @@
 import { getItems, uploader } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
 import { PaymentFormComponent } from "./payment-form.component";
-import {toast} from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -17,11 +16,11 @@ export function PaymentEdit(){
         try {
             let response = await uploader('put', 'payment/'+ payment._id, data)
             if(response.status){
-                toast.success(response.msg);
+               console.log(response.msg);
                 navigate('/dashboard/Transaction');
             }
         } catch(error) {
-            toast.error("Error while updating data...");
+            console.log(error);
         }
     }
 

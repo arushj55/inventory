@@ -56,7 +56,7 @@ export function RetailerDashboard() {
     useEffect(() => {
         getAllOrder();
         getAllPayment();
-    }, [])
+    },[])
     return (
         <>
             <div className="container-fluid">

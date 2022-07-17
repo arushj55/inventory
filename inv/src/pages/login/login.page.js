@@ -4,6 +4,8 @@ import * as axios from 'axios';
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
+import logo from '../../assets/image/logo.jpg';
+
 let defaultData = {
   email: '',
   password: '',
@@ -105,38 +107,68 @@ export function Login() {
   return (
     <>
       <ToastContainer></ToastContainer>
-      <div className='container row'>
-        <div className='col-mb-12'>
-          <h1 className='text-center'>
-            Login Page
-          </h1>
-        </div>
-      </div>
-      <hr></hr>
-      <div className='container col-sm-6 '>
-        <form onSubmit={handleFormSubmit}>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-            <input type="email" onChange={handleChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name='email' placeholder='email' required />
-            <span className='text-danger'>
-              {err.email}
-            </span>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-            <input type="password" onChange={handleChange} className="form-control" id="exampleInputPassword1" name="password" placeholder='password' required />
-            <span className='text-danger'>
-              {err.password}
-            </span>
-          </div>
-          <div className="mb-3 form-check">
-            <input type="checkbox" className="form-check-input" id="exampleCheck1" name="rememberme" onChange={handleChange} />
-            <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
-          </div>
-          <button type="submit" name="submit" className="btn btn-primary">Submit</button>
-        </form>
-      </div>
+      <div className='container-fluid'>
+        <section className="h-50 gradient-form" style={{ backgroundColor: '#eee' }}>
+          <div className="container h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+              <div className="col-xl-10">
+                <div className="card rounded-3 text-black">
+                  <div className="row g-0">
+                    <div className="col-lg-6">
+                      <div className="card-body p-md-5 mx-md-4">
 
+                        <div className="text-center">
+                          <img src={logo}
+                            style={{ width: "100px" }} alt="logo" />
+                          <h4 className="mt-1 mb-5 pb-1">Akar Enterprises</h4>
+                        </div>
+
+                        <form onSubmit={handleFormSubmit}>
+                          <p>Please login to your account</p>
+
+                          <div className="form-outline mb-4">
+                            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                            <input type="email" onChange={handleChange} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name='email' placeholder='email' required />
+                            <span className='text-danger'>
+                              {err.email}
+                            </span>
+                          </div>
+
+                          <div className="form-outline mb-4">
+                            <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                            <input type="password" onChange={handleChange} className="form-control" id="exampleInputPassword1" name="password" placeholder='password' required />
+                            <span className='text-danger'>
+                              {err.password}
+                            </span>
+                          </div>
+
+                            <a href="reset-password"> Forget/Reset Password?</a>
+
+
+                          <div className="text-center pt-1 mb-5 pb-1">
+                            <button type="submit" name="submit" className="btn btn-outline-danger">Submit</button>
+
+                          </div>
+
+                        </form>
+
+                      </div>
+                    </div>
+                    <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
+                      <div className="text-white px-3 py-4 p-md-5 mx-md-4">
+                        <h4 className="mb-4">We are more than just a company</h4>
+                        <p className="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </>
   )
 }

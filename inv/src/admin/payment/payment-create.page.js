@@ -2,7 +2,6 @@ import { useState,useEffect } from "react";
 import { postItem, getItems} from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
 import { PaymentFormComponent } from "./payment-form.component";
-import {toast} from "react-toastify";
 import { useNavigate , useParams} from "react-router-dom";
 
 export function PaymentCreate(){
@@ -17,11 +16,11 @@ export function PaymentCreate(){
         try {
             let response = await postItem('/payment',data,true)
             if(response.status){
-                toast.success(response.msg);
+                console.log(response.msg);
                 navigate('/dashboard/transaction');
             }
         } catch(error) {
-            toast.error("Error while adding data...");
+            console.log(error);
         }
     }
 
@@ -33,7 +32,6 @@ export function PaymentCreate(){
         .catch((error) => {
             console.log(error.response.msg)
             navigate('/dashboard/order');
-            // navigate(-1);
         })
     }, []);
     return (<>
