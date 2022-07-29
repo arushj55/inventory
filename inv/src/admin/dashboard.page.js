@@ -6,6 +6,7 @@ import { getItems } from "../service/axios.service"
 import { useState } from "react";
 import { ContactTable } from "../component/common/contact";
 import { OTable } from "./components/table";
+import { toast,ToastContainer } from "react-toastify";
 export function AdminDashboard() {
   let [sales, setSales] = useState()
   let [purchase, setPurchase] = useState()
@@ -24,7 +25,7 @@ export function AdminDashboard() {
       let p = 0;
       let c = 0;
       let d = 0;
-      let date = ''
+      let date = [];
       let total = 0;
       let data = suc.data.result;
       let count = suc.data.result.length;
@@ -67,16 +68,23 @@ export function AdminDashboard() {
   getItems("/product/")
     .then((suc) => {
       let count = suc.data.result.length;
+      suc.data.result.map((o,i)=>{
+        if(o.quantity < 0 || o.quantity === 0)
+        {
+            console.log("stock low")
+            toast.error("stock low")
+        }
+    })
       setProduct(count);
     })
     .catch((err) => {
       console.log("error", err);
     })
-    getItems("/payment/")
+  getItems("/payment/")
     .then((suc) => {
+
       let due = 0;
-      for(let i=0;i<suc.data.result.length;i++)
-      {
+      for (let i = 0; i < suc.data.result.length; i++) {
         due += suc.data.result[i].due_amount
       }
       setDue(due);
@@ -90,6 +98,8 @@ export function AdminDashboard() {
 
   return (
     <>
+    {role && role === "admin" ? <> <ToastContainer />jx</>:<></>}
+     
       <div className="container-fluid">
         <h1 className="mt-4">Dashboard Page</h1>
         <ol className="breadcrumb mb-4">
@@ -161,8 +171,12 @@ export function AdminDashboard() {
                 <div className="col-md-4 stretch-card grid-margin">
                   <div className="card bg-gradient-info card-img-holder text-white">
                     <div className="card-body">
-                      <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
+                      <NavLink to={"/dashboard/list"} >
+                        <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
+                      </NavLink>
+
                       <h4 className="font-weight-normal mb-3">Receivable Amount <i className="fa-solid fa-chart-line right"></i>
+
                       </h4>
                       <h2 className="mb-5">Rs.{due}</h2>
                     </div>
@@ -182,7 +196,7 @@ export function AdminDashboard() {
             role && role === "admin"
               ?
               <>
-              <div className="col-md-12 stretch-card grid-margin">
+                <div className="col-md-12 stretch-card grid-margin">
                   <div class="card bg-gradient-info card-img-holder text-white">
                     <div class="card-body">
                       <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
@@ -196,7 +210,7 @@ export function AdminDashboard() {
                 <div className="col-md-12">
                   <Chart sales={sales} purchase={purchase} date={date} />
                 </div>
-                
+
 
 
               </> :
@@ -207,7 +221,7 @@ export function AdminDashboard() {
                       <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
                       <h4 className="font-weight-normal mb-3">Order Table <i className="fa-solid fa-address-book"></i>
                       </h4>
-                      <OTable/>
+                      <OTable />
                     </div>
                   </div>
                 </div>
