@@ -98,7 +98,7 @@ export function AdminDashboard() {
 
   return (
     <>
-    {role && role === "admin" ? <> <ToastContainer />jx</>:<></>}
+    {role && role === "admin" ? <> <ToastContainer /></>:<></>}
      
       <div className="container-fluid">
         <h1 className="mt-4">Dashboard Page</h1>
