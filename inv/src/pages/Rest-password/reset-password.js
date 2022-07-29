@@ -5,7 +5,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../../assets/image/logo.jpg';
-import { ChangePassword } from './change-password';
 
 let defaultData = {
   email: ''

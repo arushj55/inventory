@@ -1,7 +1,6 @@
 const router = require("express").Router()
 const UserController = require("../controller/usercontroller");
 const UserCltr = new UserController
-const isLoggedIn = require("../middleware/custom.middleware")
 const upload = require('../middleware/uploader.middleware')
 router.route('/')
     .post(UserCltr.registeruser);

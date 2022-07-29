@@ -104,4 +104,16 @@ const deleteItem = (url, is_strict =false) => {
         })
     });
 }
-export {postItem, getItems,deleteItem,uploader};
+
+const putItem = (url, data,is_strict=false) => {
+    return new Promise((res, rej) => {
+        http.put(url,data,getHeaders(is_strict))
+        .then((response)=>{
+            res(response)
+        })
+        .catch((err)=>{
+            rej(err)
+        })
+    })
+}
+export {postItem, getItems,deleteItem,uploader,putItem};

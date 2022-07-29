@@ -7,7 +7,8 @@ const PaymentSchema = new mongoose.Schema({
     },
     cheque_number:{
         type: Number,
-        required:true
+        required:true,
+        unique:true
     },
     paid_by:{
         type:String,
@@ -17,11 +18,17 @@ const PaymentSchema = new mongoose.Schema({
             type:Number,
             required:true
     },
+    amount:{
+        type:Number
+    },
    paid_amount:{
     type:Number,
     required:true
    },
    due_amount:{
+    type:Number
+   },
+   contact:{
     type:Number
    }
 }, {

@@ -1,43 +1,43 @@
 import { useEffect, useState } from "react";
 import { deleteItem, getItems } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
-import { ActionButton } from "../../component/action-button/action-button.component";
+import { NavLink } from "react-router-dom";
 
 
-export function SupplierList(){
+export function SupplierList() {
     const [data, setData] = useState([]);
-  
+
     const getAllSuppliers = async () => {
         try {
             let result = await getItems('/supplier/')
-            if(result.data.result){
+            if (result.data.result) {
                 setData(result.data.result)
             }
-        } catch(error) {
+        } catch (error) {
             // error handle
             toast.error("Error while fetching supplier data");
         }
     }
-    useEffect( () => {
+    useEffect(() => {
         getAllSuppliers()
     }, []);
 
     const onDelete = (id) => {
-        deleteItem('/supplier/'+id, true)
-        .then((res) => {
-            if(res.data.status) {
-                toast.success(res.data.msg);
-                getAllSuppliers()
-            } else {
-                toast.error(res.data.msg);
-            }
-        })
-        .catch((error) => {
-            toast.error(error);
-        })
+        deleteItem('/supplier/' + id, true)
+            .then((res) => {
+                if (res.data.status) {
+                    toast.success(res.data.msg);
+                    getAllSuppliers()
+                } else {
+                    toast.error(res.data.msg);
+                }
+            })
+            .catch((error) => {
+                toast.error(error);
+            })
     }
     return (<>
         <AdminPageTitle
@@ -60,20 +60,18 @@ export function SupplierList(){
                         </tr>
                     </thead>
                     <tbody>
-                        {data && data.map((o,i) => (
+                        {data && data.map((o, i) => (
                             <tr key={i}>
-                                <td>{i+1}</td>
+                                <td>{i + 1}</td>
                                 <td>{o.name}</td>
                                 <td>{o.email}</td>
                                 <td>{o.address}</td>
                                 <td>{o.phone}</td>
 
                                 <td>
-                                    <ActionButton
-                                        editLink={"/dashboard/supplier/"+o._id}
-                                        id={o._id}
-                                        onDelete={onDelete}
-                                    />
+                                    <NavLink to={"/dashboard/supplier/" + o._id} className="btn btn-sm btn-success btn-rounded" >
+                                        <i className="fa fa-pen"></i>
+                                    </NavLink>
                                 </td>
                             </tr>
                         ))}
@@ -81,6 +79,6 @@ export function SupplierList(){
                 </table>
             </div>
         </div>
-    
+
     </>)
 }

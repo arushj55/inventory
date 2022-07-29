@@ -28,6 +28,7 @@ export function HomePage() {
     // axios call to server 
     postItem("/contact/",data)
         .then((suc)=>{
+            console.log("success")
             Toast.success("Contact Send")
         })
       .catch((err) => {

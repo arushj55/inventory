@@ -25,6 +25,7 @@ export function UserEdit(){
     useEffect(() => {
         getItems('/user/'+params.id)
         .then((response) => {
+            toast.success(response.msg)
             setUser(response.data.result);
         })
         .catch((error) => {

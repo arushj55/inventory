@@ -11,11 +11,6 @@ export function RetailerSidebar() {
                         <div className="sb-nav-link-icon" style={{color:"hsl(223, 97%, 69%)"}}><i className="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </NavLink>
-                    <NavLink className="nav-link" to="/retailer/pdf" style={{color:"black"}}>
-                        <div className="sb-nav-link-icon" style={{color:"hsl(223, 97%, 69%)"}}><i className="fa-solid fa-file"></i></div>
-                        Report
-                    </NavLink>
-                   
                 </div>
             </div>
             <div className="sb-sidenav-footer">

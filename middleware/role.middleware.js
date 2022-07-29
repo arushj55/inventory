@@ -32,6 +32,7 @@ const isStaff = (req, res, next) => {
 }
 
 const isStaffAdmin = (req, res, next) => {
+    console.log(req.body)
     if(req.auth_user.role == 'admin' || req.auth_user.role == 'staff'){
         next();
     } else {

@@ -38,6 +38,7 @@ export const options = {
 
 export function Chart(props) {
   
+  
 const labels = [props.date];
 
  const data = {

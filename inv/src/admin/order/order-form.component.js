@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { getItems } from "../../service/axios.service"
 import Select from 'react-select'
-
+import { useParams } from "react-router-dom";
 
 let default_data = {
     bill_number: '',
@@ -17,9 +17,9 @@ let default_data = {
 export function OrderFormComponent({ onHandleSubmit, order }) {
     let user = JSON.parse(localStorage.getItem('reactuser_user'));
     let role = user.role;
-
+    
     let [err, setErr] = useState(default_data);
-    let [data, setData] = useState();
+    let [data, setData] = useState(order ?? default_data);
     let [price, setPrice] = useState();
     let [qty, setQuantity] = useState();
     let [supplier, setSupplier] = useState();
@@ -29,6 +29,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
     let [default_retailer, setDefaultRetailer] = useState();
     let [default_product, setDefaultProduct] = useState();
     let [validated, setValidated] = useState(false);
+    let params = useParams();
 
     const submitForm = (event) => {
         const form = event.currentTarget;
@@ -44,7 +45,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
 
 
     }
-
+       
     const handleChange = (ev) => {
         let { value, name, type } = ev.target;
 
@@ -69,15 +70,16 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                 errMsg = value != "delivered" || value != 'pending' ? 'state is either delivered or pending' : '';
                 break
             case "quantity":
-                        if(value > qty)
-                        {
-                            errMsg="Quantity is higher than stock value"
-                        }
-                        if(value === '')
-                        {
-                            errMsg="Quantity is required"
-                        }
-                        
+                if (value > qty && data.status === 'sales') {
+                    errMsg = "Quantity is higher than stock value"
+                }
+                if (value === '') {
+                    errMsg = "Quantity is required"
+                }
+                if (value < 0) {
+                    errMsg = "Invalid "
+                }
+
                 break
         }
 
@@ -123,6 +125,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
         getAllSuppliers()
         getAllReatilers()
         getAllProducts()
+        
     }, [])
 
 
@@ -153,7 +156,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
         setPrice(default_product?.price)
         setQuantity(default_product?.quantity)
     }, [default_product])
-    console.log(err.quantity)
+   
     return (
 
         <>
@@ -172,30 +175,39 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
 
 
                             {
-                                role && role === "admin"
+                                role && role === "admin" 
                                     ?
                                     <>
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} md="4" controlId="validationCustom01">
+                                        
+                                        {params.id && params.status === "purchase" ? 
+                                            <>
+                                            <Row className="mb-3">
+                                            <Form.Group as={Col} md="8" controlId="validationCustom01">
                                                 <Form.Label>Supplier</Form.Label>
                                                 <Select
                                                     value={default_supplier}
                                                     onChange={handleSupplierChange}
                                                     options={supplier}
+
                                                 />
                                             </Form.Group>
+                                            </Row>
+                                            </> : <></>}
 
-                                            <Form.Group as={Col} md="4" controlId="validationCustom02">
-                                                <Form.Label>Retailer</Form.Label>
-                                                <Select
-                                                    value={default_retailer}
-                                                    onChange={handleRetailerChange}
-                                                    options={retailer}
-                                                />
-                                            </Form.Group>
-
+                                            {params.id && params.status === "sale" ? 
+                                            <> 
+                                            <Row>
+                                            <Form.Group as={Col} md="8" controlId="validationCustom02">
+                                            <Form.Label>Retailer</Form.Label>
+                                            <Select
+                                                value={default_retailer}
+                                                onChange={handleRetailerChange}
+                                                options={retailer}
+                                            />
+                                        </Form.Group>
                                         </Row>
+                                        </> : <></>}
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} md="8" controlId="validationCustom03">
@@ -208,22 +220,41 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                             </Form.Group>
                                         </Row>
 
+                                        {params && params.status === "purchase" ? <>
                                         <Row className="mb-3">
                                             <Form.Group as={Col} md="8" controlId="validationCustom04">
                                                 <Form.Label>Status</Form.Label>
-                                                <Form.Select
-                                                    aria-label="Status"
+                                                <Form.Control
+                                                    type="text"
                                                     name="status"
                                                     onChange={handleChange}
-                                                >
-                                                    <option value="purchase" selected={order?.role == 'purchase' ? true : false}>Purchase</option>
-                                                    <option value="sale" selected={order?.role == 'sale' ? true : false}>Sale</option>
-                                                </Form.Select>
+                                                    defaultValue={params.status}
+                                                    required
+
+                                                />
                                                 <Form.Control.Feedback type="invalid">{
                                                     err['status'] ?? 'Status is required'
                                                 }</Form.Control.Feedback>
                                             </Form.Group>
                                         </Row>
+                                        </> : <> 
+                                        <Row className="mb-3">
+                                            <Form.Group as={Col} md="8" controlId="validationCustom04">
+                                                <Form.Label>Status</Form.Label>
+                                                <Form.Control
+                                                    type="text"
+                                                    name="status"
+                                                    onChange={handleChange}
+                                                    defaultValue={params.status}
+                                                    required
+
+                                                />
+                                                <Form.Control.Feedback type="invalid">{
+                                                    err['status'] ?? 'Status is required'
+                                                }</Form.Control.Feedback>
+                                            </Form.Group>
+                                        </Row>
+                                        </>}
                                         <Row className="mb-3">
                                             <Form.Group as={Col} md="8" controlId="validationCustom05">
                                                 <Form.Label>Quantity</Form.Label>
@@ -235,7 +266,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                                     required
 
                                                 />
-                                                
+
                                             </Form.Group>
                                             <span className='text-danger'>
                                                 {err.quantity}

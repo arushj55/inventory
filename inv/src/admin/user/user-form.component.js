@@ -44,14 +44,16 @@ export function UserFormComponent({ onHandleSubmit, user }) {
             }
 
         });
-        validateData(name);
+        validateData(name,value);
     }
-    const validateData = (field) => {
+    const validateData = (field,value) => {
         let errMsg = '';
         switch (field) {
             case "role":
                 errMsg = data['role'] !== "staff" || data['role'] !== 'retailer' ? 'Role is either retailer or staff' : '';
                 break
+            case "phone":
+                errMsg = value ? (value.length < 10 ? "Phone number must be at least 10 digits" : "") : "phone number is required" ;
         }
 
         setErr((pre) => {

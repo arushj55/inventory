@@ -4,6 +4,7 @@ import { AdminPageTitle } from "../components/page-title.component";
 import "lightbox2/dist/css/lightbox.css";
 import "lightbox2/dist/js/lightbox-plus-jquery.js"
 import { ActionButton } from "../../component/action-button/action-button.component";
+import { toast } from "react-toastify";
 
 
 export function PaymentList(){
@@ -29,6 +30,7 @@ export function PaymentList(){
         deleteItem('/payment/'+id, true)
         .then((res) => {
             if(res.data.status) {
+                toast.success(res.data.msg);
                 getAllPayments()
             } else {
                 console.log(res.data.msg);
@@ -67,7 +69,7 @@ export function PaymentList(){
                                 <td>{i+1}</td>
                                 <td>{o.bill_number}</td>
                                 <td>{o.cheque_number}</td>
-                                <td>{o.total_amount}</td>
+                                <td>{o.amount}</td>
                                 <td>{o.paid_amount}</td>
                                 <td>{o.due_amount}</td>
 

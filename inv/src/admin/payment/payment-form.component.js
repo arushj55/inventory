@@ -12,12 +12,13 @@ let default_data = {
     due_amount: ''
 };
 
-export function PaymentFormComponent({ onHandleSubmit, payment }) {
+export function PaymentFormComponent({ onHandleSubmit, payment, id}) {
     let [err, setErr] = useState(default_data);
     let [data, setData] = useState();
     let [amount, setAmount] = useState();
     let [validated, setValidated] = useState(false);
 
+    
 
 
     const submitForm = (event) => {
@@ -36,6 +37,17 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
 
     }
 
+    getItems("/order/"+id)
+        .then((suc) => {
+            setAmount(suc.data.result.sub_total)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+       
+
+
     const handleChange = (ev) => {
         let { value, name, type } = ev.target;
 
@@ -49,11 +61,13 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
         validateData(name, value);
     }
     const validateData = (field, value) => {
+        console.log("value",amount)
         let errMsg = '';
         switch (field) {
             case "paid_amount":
-                if(amount == 0)
+                if( value < 0)
                 {
+                    errMsg = "invalid"
                     break;
                 }
                 if (value > amount ) {
@@ -75,13 +89,7 @@ export function PaymentFormComponent({ onHandleSubmit, payment }) {
         setValidated(true);
     }
 
-    getItems("/payment/")
-        .then((suc) => {
-            setAmount(suc.data.result[suc.data.result.length-1].due_amount)
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+    
     return (
 
         <>

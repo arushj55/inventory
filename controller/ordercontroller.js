@@ -1,16 +1,10 @@
 const Order = require("../model/order.model");
 class OrderController{
     createOrder = (req, res, next) => {
-        let data = req.body;
-        function between(min, max) {  
-            return Math.floor(
-              Math.random() * (max - min + 1) + min
-            )
-          }
-          
-        data.bill_number = between(1,123456)
+        let data = req.body;          
+        data.bill_number = (Math.floor(Date.now()/10000))
         data.sub_total = data.price*data.quantity;
-
+        data.due_amount = data.price*data.quantity;
         let order = Order(data);
 
             order.save((err,suc)=>{
@@ -80,18 +74,19 @@ class OrderController{
 
     updateorderbyid= (req,res,next)=>{
         let data =req.body;
+        console.log("here",req.data.id)
         Order.updateOne({_id: req.params.id},{$set:data},(err,succ)=>{
             if(err){
                 console.log(err);
                 next({
-                    statuscode:400,
-                    msg: "Error while updating data"
+                    status:false,
+                    msg: err
                 })
             }
             else{
                 console.log(succ);
                 res.json({
-                    result:succ,
+                    result:data,
                     status: true,
                     msg:"Successfully data updated"
                 }) 

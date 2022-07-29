@@ -65,7 +65,7 @@ class SupplierController{
     }
     
     updateSupplierbyid= (req,res,next)=>{
-        console.log("aako xa ta data",req.body)
+        
         Supplier.updateOne({_id: req.params.id},{$set:req.body},(err,succ)=>{
             if(err){
                 console.log(err);

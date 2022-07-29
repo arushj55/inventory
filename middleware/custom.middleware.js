@@ -14,6 +14,12 @@ const isLoggedIn = (req, res, next) => {
         token = req.query['token'];
     }
 
+    if(!token){
+        next({
+            msg: "Unauthorized",
+            statusCode: 403
+        })
+    }
     token = token.split(" ");
     if(token.length > 1){
         token = token[1];
@@ -23,12 +29,7 @@ const isLoggedIn = (req, res, next) => {
 
     //console.log(token);
 
-    if(!token){
-        next({
-            msg: "Unauthorized",
-            statusCode: 403
-        })
-    }
+    
 
     let data = jwt.verify(token, process.env.JWT_SECRET);
    

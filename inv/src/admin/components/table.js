@@ -29,7 +29,6 @@ export function OTable(){
                             <th>Status</th>
                             <td>State</td>
                             <th>Quantity</th>
-                            <th>Price</th>
                             <th>Sub Total</th>
                         </tr>
                     </thead>
@@ -43,9 +42,8 @@ export function OTable(){
                                 <td style={{color:"White"}}>{o.product?.product_name}</td>
                                 <td style={{color:"White"}}>{o?.status}</td>
                                 <td style={{color:"White"}}>{o?.state}</td>
-                                <td style={{color:"White"}}>{o.quantity}</td>
-                                <td style={{color:"White"}}>{o.price}</td>
-                                <td style={{color:"White"}}>{o.sub_total}</td>
+                                <td style={{color:"White"}}>{o?.quantity}</td>
+                                <td style={{color:"White"}}>{o?.sub_total}</td>
                             </tr>
                         ))}
                     </tbody>

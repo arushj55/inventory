@@ -2,6 +2,7 @@ import { postItem, uploader } from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
 import { OrderFormComponent } from "./order-form.component";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 export function OrderCreate() {
@@ -9,13 +10,11 @@ export function OrderCreate() {
 
 
     const addOrder = async (data) => {
-
-        try {
+         try {
             let response = await postItem('/order', data, true)
             if (response.status) {
                 uploader('get', 'product/' + data.product)
                     .then((res) => {
-
                         if (data.status === 'purchase') {
                            res.result.quantity = Number(res.result.quantity) + Number(data.quantity);
                         }
@@ -24,11 +23,12 @@ export function OrderCreate() {
                         }
 
                         res.result.supplier = res.result.supplier._id
-                        console.log("here quantity", res.result)
+                        
 
                          uploader('put','product/'+data.product,res.result)
                             .then((succ)=>{
-                                navigate('/dashboard/order')
+                                toast.success("Order Created Successfully....")
+                                navigate('/dashboard/product')
                             })
 
                     })
@@ -38,6 +38,8 @@ export function OrderCreate() {
         } catch (error) {
             console.log(error);
         }
+         
+       
     }
 
     return (<>

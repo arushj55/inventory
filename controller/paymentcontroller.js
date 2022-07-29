@@ -4,12 +4,7 @@ const OrderCltr = new OrderController;
 class PaymentController{
     createPayment = (req, res, next) => {
         let data = req.body;
-        function between(min, max) {  
-            return Math.floor(
-              Math.random() * (max - min + 1) + min
-            )
-          }
-          data.cheque_number = between(1,1234567891011)
+          data.cheque_number = Date.now();
           data.due_amount = data.total_amount - data.paid_amount;
           data.total_amount = data.total_amount - data.paid_amount;
         let payment = Payment(data);
@@ -107,7 +102,7 @@ class PaymentController{
                 res.json({
                     result:succ,
                     status: true,
-                    msg:"Successfully data deleted"
+                    msg:"Successfully transaction deleted"
                 })
             }
         })

@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const OrderSchema = new mongoose.Schema({
     bill_number:{
         type:Number,
-        required:true
+        required:true,
+        unique:true
     },
     supplier: {
         type: mongoose.Types.ObjectId,
@@ -21,9 +22,7 @@ const OrderSchema = new mongoose.Schema({
         required:true
     },
     status:{
-        type:String,
-        enum:['purchase','sale'],
-        default:'sale'
+        type:String
     },
     state:{
         type:String,

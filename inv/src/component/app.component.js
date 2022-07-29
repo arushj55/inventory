@@ -37,6 +37,9 @@ import { PdfGenerator } from "../admin/components/pdf";
 import { Generator } from "../retailer/components/pdf";
 import {Reset} from "../pages/Rest-password/reset-password";
 import {ChangePassword} from "../pages/Rest-password/change-password";
+import { List } from "../admin/components/list";
+import { PurchaseList } from "../admin/order/order-list.page";
+
 function Home() {
     return (<>
         <Header></Header>
@@ -93,11 +96,13 @@ export function App() {
                         <Route path='login' element={<Login />}></Route>
                         <Route path="reset-password" element={<Reset/>}/>
                         <Route path="change-password" element={<ChangePassword/>}></Route>
+                        
                     </Route>
 
                     <Route path="/dashboard" element={<AdminPrivateRoutes component={<AdminLayout />}></AdminPrivateRoutes>}>
                         <Route index element={<AdminDashboard></AdminDashboard>}></Route>
-
+                        <Route path="list" element={<List/>}>
+                        </Route>
                         <Route path="user" element={<UserPage />}>
                             <Route index element={<UserList />}></Route>
                             <Route path="create" element={<UserCreate />}></Route>
@@ -117,8 +122,9 @@ export function App() {
                         </Route>
 
                         <Route path="order" element={<OrderPage />}>
-                            <Route index element={<OrderList />}></Route>
-                            <Route path="create" element={<OrderCreate />}></Route>
+                            <Route path="sale" element={<OrderList />}></Route>
+                            <Route path="purchase" element={<PurchaseList/>}></Route>
+                            <Route path="create/:status/:id" element={<OrderCreate />}></Route>
                             <Route path=":id" element={<OrderEdit />}></Route>
                         </Route>
 

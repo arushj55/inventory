@@ -82,11 +82,11 @@ export function AdminSidebar() {
                                 role && role == "admin"
                                     ?
                                     <>
-                                        <NavLink className="nav-link" to="/dashboard/order/create">Create Order</NavLink>
+                                        <NavLink className="nav-link" to="/dashboard/order/purchase">Purchase Order</NavLink>
                                     </>
                                     :
                                     <></>}
-                            <NavLink className="nav-link" to="/dashboard/order">List Order</NavLink>
+                            <NavLink className="nav-link" to="/dashboard/order/sale">Sales Order</NavLink>
                         </nav>
                     </div>
 
