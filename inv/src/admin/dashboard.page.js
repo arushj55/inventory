@@ -17,6 +17,7 @@ export function AdminDashboard() {
   let [due, setDue] = useState()
   let [supplier, setSupplier] = useState()
   let [product, setProduct] = useState()
+  let [pay, setPay] = useState()
   let user = JSON.parse(localStorage.getItem('reactuser_user'));
   let role = user.role;
   getItems("/order/")
@@ -82,12 +83,21 @@ export function AdminDashboard() {
     })
   getItems("/payment/")
     .then((suc) => {
-
+     
       let due = 0;
+      let pay = 0;
       for (let i = 0; i < suc.data.result.length; i++) {
-        due += suc.data.result[i].due_amount
+        if(suc.data.result[i].paid_by)
+        {
+          due += suc.data.result[i].due_amount
+        }
+        else{
+          pay += suc.data.result[i].due_amount
+        }
+        
       }
       setDue(due);
+      setPay(pay);
     })
 
     .catch((err) => {
@@ -114,8 +124,9 @@ export function AdminDashboard() {
             <div className="card bg-gradient-info card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
-                <h4 className="font-weight-normal mb-3">Number of Supplier <i className="fa-solid fa-chart-line right"></i>
+                <h4 className="font-weight-normal mb-3">Number of Supplier <i className="fa-solid fa-boxes-packing right"></i>
                 </h4>
+                
                 <h2 className="mb-5">{supplier}</h2>
 
               </div>
@@ -125,29 +136,48 @@ export function AdminDashboard() {
             <div className="card bg-gradient-info card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
-                <h4 className="font-weight-normal mb-3">Number of Product <i className="fa-solid fa-chart-line right"></i>
+                <h4 className="font-weight-normal mb-3">Number of Product <i class="fa-solid fa-boxes-stacked right"></i>
                 </h4>
                 <h2 className="mb-5">{product}</h2>
               </div>
             </div>
           </div>
 
+          {role && role === 'admin' ? <>
+          <div className="col-md-4 stretch-card grid-margin">
+                  <div className="card bg-gradient-info card-img-holder text-white">
+                    <div className="card-body">
+                      <NavLink to={"/dashboard/plist"} >
+                        <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
+                      </NavLink>
+
+                      <h4 className="font-weight-normal mb-3">Payable Amount <i class="fa-solid fa-cash-register right"></i>
+
+                      </h4>
+                      <h2 className="mb-5">Rs.{pay}</h2>
+                    </div>
+                  </div>
+                </div>
+          </> : 
+          <>
           <div className="col-md-4 stretch-card grid-margin">
             <div className="card bg-gradient-info card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
-                <h4 className="font-weight-normal mb-3">Pending Order <i className="fa-solid fa-chart-line right"></i>
+                <h4 className="font-weight-normal mb-3">Pending Order<i class="fa-solid fa-spinner right"></i>
                 </h4>
                 <h2 className="mb-5">{pending}</h2>
               </div>
             </div>
           </div>
+          </>}
+          
 
           <div className="col-md-4 stretch-card grid-margin">
             <div className="card bg-gradient-info card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
-                <h4 className="font-weight-normal mb-3">Delivered Order <i className="fa-solid fa-chart-line right"></i>
+                <h4 className="font-weight-normal mb-3">Delivered Order <i class="fa-solid fa-truck right"></i>
                 </h4>
                 <h2 className="mb-5">{delivered}</h2>
               </div>
@@ -175,7 +205,7 @@ export function AdminDashboard() {
                         <img src={require("../assets/image/circle.png")} className="card-img-absolute" alt="circle" />
                       </NavLink>
 
-                      <h4 className="font-weight-normal mb-3">Receivable Amount <i className="fa-solid fa-chart-line right"></i>
+                      <h4 className="font-weight-normal mb-3">Receivable Amount <i class="fa-solid fa-cash-register right"></i>
 
                       </h4>
                       <h2 className="mb-5">Rs.{due}</h2>

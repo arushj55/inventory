@@ -8,7 +8,7 @@ export function PaymentEdit(){
     let navigate = useNavigate();
     let params = useParams();
     let [payment, setPayment] = useState();
-
+   
     const editPayment = async (data) => {
         data.paid_amount = Number(data.paid_amount)+Number(payment.paid_amount);
         data.due_amount = Number(payment.total_amount)- Number(data.paid_amount);

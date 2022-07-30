@@ -12,13 +12,16 @@ let default_data = {
     due_amount: ''
 };
 
-export function PaymentFormComponent({ onHandleSubmit, payment, id}) {
+export function PaymentFormComponent({ onHandleSubmit, payment, id }) {
+    let user = JSON.parse(localStorage.getItem('reactuser_user'));
+    let role = user.role;
+    
     let [err, setErr] = useState(default_data);
     let [data, setData] = useState();
     let [amount, setAmount] = useState();
     let [validated, setValidated] = useState(false);
 
-    
+
 
 
     const submitForm = (event) => {
@@ -37,7 +40,7 @@ export function PaymentFormComponent({ onHandleSubmit, payment, id}) {
 
     }
 
-    getItems("/order/"+id)
+    getItems("/order/" + id)
         .then((suc) => {
             setAmount(suc.data.result.sub_total)
         })
@@ -45,11 +48,8 @@ export function PaymentFormComponent({ onHandleSubmit, payment, id}) {
             console.log(err);
         })
 
-       
-
-
     const handleChange = (ev) => {
-        let { value, name, type } = ev.target;
+        let { value, name } = ev.target;
 
         setData((pre) => {
             return {
@@ -61,16 +61,15 @@ export function PaymentFormComponent({ onHandleSubmit, payment, id}) {
         validateData(name, value);
     }
     const validateData = (field, value) => {
-        console.log("value",amount)
+       
         let errMsg = '';
         switch (field) {
             case "paid_amount":
-                if( value < 0)
-                {
+                if (value < 0) {
                     errMsg = "invalid"
                     break;
                 }
-                if (value > amount ) {
+                if (value > amount) {
                     errMsg = "Amount is higher then total value"
                 }
                 if (value === '') {
@@ -89,7 +88,8 @@ export function PaymentFormComponent({ onHandleSubmit, payment, id}) {
         setValidated(true);
     }
 
-    
+    console.log(payment)
+
     return (
 
         <>
@@ -104,9 +104,6 @@ export function PaymentFormComponent({ onHandleSubmit, payment, id}) {
                     <Col>
 
                         <Form noValidate validated={validated} onSubmit={submitForm} className="center">
-
-
-
                             <Row className="mb-3">
                                 <Form.Group as={Col} md="4" controlId="validationCustom01">
                                     <Form.Label>Paid Amount</Form.Label>
@@ -124,6 +121,32 @@ export function PaymentFormComponent({ onHandleSubmit, payment, id}) {
                                     </span>
                                 </Form.Group>
                             </Row>
+
+                                {role && role === 'admin' ? 
+                                <>
+                                 <Row className="mb-3">
+                                <Form.Group as={Col} md="8" controlId="validationCustom07">
+                                    <Form.Label>State</Form.Label>
+                                    <Form.Select
+                                        aria-label="State"
+                                        name="state"
+                                        onChange={handleChange}
+                                    >
+                                        <option value="delivered" selected={payment?.state == 'delivered' ? true : false}>Delivered</option>
+                                        <option value="pending" selected={payment?.state == 'pending' ? true : false}>Pending</option>
+                                    </Form.Select>
+                                    <Form.Control.Feedback type="invalid">{
+                                        err['state'] ?? 'State is required'
+                                    }</Form.Control.Feedback>
+                                </Form.Group>
+                            </Row>
+                                </>    
+                                :
+                                <></>
+                            
+                            }
+
+                           
 
 
                             <Button type="submit">Submit form</Button>

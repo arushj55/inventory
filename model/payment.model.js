@@ -11,8 +11,10 @@ const PaymentSchema = new mongoose.Schema({
         unique:true
     },
     paid_by:{
-        type:String,
-        required:true,
+        type:String
+    },
+    paid_to:{
+        type:String
     },
     total_amount:{
             type:Number,

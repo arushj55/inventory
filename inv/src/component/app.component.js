@@ -37,7 +37,7 @@ import { PdfGenerator } from "../admin/components/pdf";
 import { Generator } from "../retailer/components/pdf";
 import {Reset} from "../pages/Rest-password/reset-password";
 import {ChangePassword} from "../pages/Rest-password/change-password";
-import { List } from "../admin/components/list";
+import { List, Plist } from "../admin/components/list";
 import { PurchaseList } from "../admin/order/order-list.page";
 
 function Home() {
@@ -101,8 +101,8 @@ export function App() {
 
                     <Route path="/dashboard" element={<AdminPrivateRoutes component={<AdminLayout />}></AdminPrivateRoutes>}>
                         <Route index element={<AdminDashboard></AdminDashboard>}></Route>
-                        <Route path="list" element={<List/>}>
-                        </Route>
+                        <Route path="list" element={<List/>}></Route>
+                        <Route path="plist" element={<Plist/>}></Route>
                         <Route path="user" element={<UserPage />}>
                             <Route index element={<UserList />}></Route>
                             <Route path="create" element={<UserCreate />}></Route>

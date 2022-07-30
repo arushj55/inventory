@@ -114,7 +114,7 @@ export function OrderList() {
                                         ?
                                         <>
                                             <td>
-                                                <NavLink to={"/dashboard/pdf" + o._id} className="btn btn-sm btn-danger btn-rounded"><i class="fa-solid fa-file-pdf"></i></NavLink>
+                                                <NavLink to={"/dashboard/pdf" + o._id} className="btn btn-sm btn-secondary btn-rounded"><i class="fa-solid fa-receipt"></i></NavLink>
                                             </td>
 
                                         </> :
@@ -200,29 +200,9 @@ export function PurchaseList() {
                             <th>Status</th>
                             <td>State</td>
                             <th>Quantity</th>
-                            {
-                                role && role === 'admin'
-                                    ?
-                                    <>
-                                        <th>Price</th>
-                                    </> :
-                                    <>
-
-                                    </>
-                            }
-
+                            <th>Price</th>
                             <th>Sub Total</th>
-                            {
-                                role && role === 'admin'
-                                    ?
-                                    <>
-                                    </> :
-                                    <>
-                                        <th>Action</th>
-                                    </>
-                            }
-
-
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -235,35 +215,13 @@ export function PurchaseList() {
                                 <td>{o?.status}</td>
                                 <td>{o?.state}</td>
                                 <td>{o.quantity}</td>
-                                {
-                                    role && role == 'admin'
-                                        ?
-                                        <>
-                                            <td>{o.price}</td>
-
-                                        </> :
-                                        <>
-
-                                        </>
-                                }
-
+                                <td>{o.price}</td>
                                 <td>{o.sub_total}</td>
-                                {
-                                    role && role == 'admin'
-                                        ?
-                                        <>
-
-
-                                        </> :
-                                        <>
-                                            <td>
-
-                                                <NavLink to={"/dashboard/order/" + o._id} className="btn btn-sm btn-success btn-rounded" >
-                                                    <i className="fa fa-pen"></i>
-                                                </NavLink>
-                                            </td>
-                                        </>
-                                }
+                                <td>
+                                    <NavLink to={"/dashboard/transaction/create" + o._id} className="btn btn-sm btn-secondary btn-rounded" >
+                                        <i className="fa fa-cash-register"></i>
+                                    </NavLink>
+                                </td>
 
 
 
