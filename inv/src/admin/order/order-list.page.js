@@ -10,12 +10,11 @@ import { NavLink } from "react-router-dom";
 export function OrderList() {
     let user = JSON.parse(localStorage.getItem('reactuser_user'));
     let role = user.role;
-    let url=("URL",window.location.pathname);
-    console.log(url.slice(17));
+
 
     const [data, setData] = useState([]);
     let d = []
-    let p =[]
+
     const getAllOrders = async () => {
         try {
             let result = await getItems('/order/')
@@ -38,12 +37,15 @@ export function OrderList() {
 
 
     return (<>
+        {role && role === 'admin' ? <>
+            <AdminPageTitle
+                title="Sale"
+                bread_crumb="Sale List"
+                add_link="/dashboard/order/create/sale"
+            />
+        </> : <></>}
 
-        <AdminPageTitle
-            title="Sale"
-            bread_crumb="Sale List"
-            add_link="/dashboard/order/create/sale"
-        />
+
 
         <div className="card mb-4">
             <div className="card-body">
@@ -77,6 +79,7 @@ export function OrderList() {
                                     </> :
                                     <>
                                         <th>Action</th>
+                                        <th>Payment</th>
                                     </>
                             }
 
@@ -117,9 +120,14 @@ export function OrderList() {
                                         </> :
                                         <>
                                             <td>
-
                                                 <NavLink to={"/dashboard/order/" + o._id} className="btn btn-sm btn-success btn-rounded" >
                                                     <i className="fa fa-pen"></i>
+                                                </NavLink>
+
+                                            </td>
+                                            <td>
+                                                <NavLink to={"/dashboard/transaction/create" + o._id} className="btn btn-sm btn-secondary btn-rounded" >
+                                                    <i className="fa fa-cash-register"></i>
                                                 </NavLink>
                                             </td>
                                         </>
@@ -137,15 +145,15 @@ export function OrderList() {
     </>)
 }
 
-export function PurchaseList(){
+export function PurchaseList() {
     let user = JSON.parse(localStorage.getItem('reactuser_user'));
     let role = user.role;
-    let url=("URL",window.location.pathname);
-    console.log(url.slice(17));
 
-    const [purchase,setPurchase] = useState([]);
 
-    let p =[]
+
+    const [purchase, setPurchase] = useState([]);
+
+    let p = []
     const getAllOrders = async () => {
         try {
             let result = await getItems('/order/')
@@ -153,10 +161,10 @@ export function PurchaseList(){
                 if (o.status === 'purchase') {
                     p.push(o);
                 }
-                
+
 
             })
-            
+
             setPurchase(p);
         } catch (error) {
             // error handle
@@ -170,12 +178,15 @@ export function PurchaseList(){
 
 
     return (<>
+        {role && role === 'admin' ? <>
+            <AdminPageTitle
+                title="Purchase"
+                bread_crumb="Purchase List"
+                add_link="/dashboard/order/create/purchase"
+            />
+        </> : <> </>}
 
-        <AdminPageTitle
-            title="Purchase"
-            bread_crumb="Purchase List"
-            add_link="/dashboard/order/create/purchase"
-        />
+
 
         <div className="card mb-4">
             <div className="card-body">
@@ -241,7 +252,7 @@ export function PurchaseList(){
                                     role && role == 'admin'
                                         ?
                                         <>
-                                            
+
 
                                         </> :
                                         <>

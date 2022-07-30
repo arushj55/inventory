@@ -22,7 +22,8 @@ const OrderSchema = new mongoose.Schema({
         required:true
     },
     status:{
-        type:String
+        type:String,
+        default:'sale'
     },
     state:{
         type:String,

@@ -18,25 +18,45 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   ]
 
   let d=[];
-    const getAllOrders = async () => {
-      try {
-          let result = await getItems('/order/')
-          for (let i = 0; i < result.data.result.length; i++) {
-            if (result.data.result[i].retailer.email ===  user.email) {
-                d.push((result.data.result[i]));
-            }
-           setData(d);
+  //   const getAllOrders = async () => {
+  //     try {
+  //         let result = await getItems('/order/')
+  //         for (let i = 0; i < result.data.result.length; i++) {
+  //           if (result.data.result[i].retailer.email ===  user.email) {
+  //               d.push((result.data.result[i]));
+  //           }
+  //          setData(d);
             
-        }
+  //       }
         
-      } catch (error) {
-          // error handle
-          console.log(error);
-      }
-  }
+  //     } catch (error) {
+  //         // error handle
+  //         console.log(error);
+  //     }
+  // }
 
   
- 
+  const getAllOrders = async () => {
+    try {
+        let res = await getItems('/order/')
+         res.data.result.map((o)=>{
+            if(o.status === 'sale')
+            {
+              if (o.retailer._id === user.id){
+                d.push(o);
+              }
+              
+            }
+            
+         })
+         setData(d)
+    }
+    catch (error) {
+        console.log(error)
+    }
+
+}
+
   useEffect(() => {
       getAllOrders()
   },[]);

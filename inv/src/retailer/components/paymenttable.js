@@ -21,7 +21,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
       try {
           let result = await getItems('/payment/')
           for (let i = 0; i < result.data.result.length; i++) {
-            if (result.data.result[i].paid_by === user.email) {
+            if (result.data.result[i].paid_by === user.name) {
                 d.push((result.data.result[i]));
             }
            setData(d);

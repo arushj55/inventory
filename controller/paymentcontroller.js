@@ -70,7 +70,6 @@ class PaymentController{
 
     updatepaymentbyid= (req,res,next)=>{
         let data =req.body;
-        console.log("data",data)
         Payment.updateOne({_id: req.params.id},{$set:data},(err,succ)=>{
             if(err){
                 console.log(err);

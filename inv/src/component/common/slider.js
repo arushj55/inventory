@@ -12,7 +12,7 @@ export function ControlledCarousel() {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://lphospital.gov.np/wp-content/uploads/2019/12/W0219_PostOp_getty913784822.jpg"
+            src="https://www.market-prospects.com//storage/images/0d6b367409602f379d8a511e8b325fdb.jpg"
             alt="First slide"
           />
           <Carousel.Caption>

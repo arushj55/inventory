@@ -13,17 +13,24 @@ export function RetailerDashboard() {
     let t = 0;
     let c = 0;
     let d = 0;
+    let data = [];
 
     const getAllOrder = async () => {
         try {
             let res = await getItems('/order/')
-            let data = res.data.result;
-            let count = res.data.result.length;
-            for (let i = 0; i < count; i++) {
-                if (data[i].retailer.email === user.email) {
-                    t += data[i].sub_total;
-                    c++;
+             res.data.result.map((o)=>{
+                if(o.status === 'sale')
+                {
+                   data.push(o)
                 }
+             })
+            
+        
+            for (let i = 0; i < data.length; i++) {
+                 if (data[i].retailer._id === user.id) {
+                 t += data[i].sub_total;
+                 c++;
+                 }
 
                 setTotal(t);
                 setCount(c);
@@ -41,7 +48,7 @@ export function RetailerDashboard() {
             let data = res.data.result;
             let count = res.data.result.length;
             for (let i = 0; i < count; i++) {
-                if (data[i].paid_by === user.email) {
+                if (data[i].paid_by === user.name) {
                     d += data[i].paid_amount;
                 }
                 setPaid(d);

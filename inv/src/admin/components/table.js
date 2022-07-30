@@ -1,21 +1,34 @@
 import { useState,useEffect } from "react";
 import { getItems } from "../../service/axios.service";
 import "../../pages/map.css"
+import {toast} from "react-toastify"
 export function OTable(){
+    let user = JSON.parse(localStorage.getItem('reactuser_user'));
+    let role = user.role;
+
+
     const [data, setData] = useState([]);
+    let d = []
+
     const getAllOrders = async () => {
         try {
             let result = await getItems('/order/')
-            if (result.data.result) {
-                setData(result.data.result)
-            }
+            result.data.result.map((o, i) => {
+                if (o.status === 'sale') {
+                    d.push(o);
+                }
+
+            })
+            setData(d);
         } catch (error) {
-           console.log(error)
+            // error handle
+            toast.error("Error while fetching order data");
         }
     }
     useEffect(() => {
         getAllOrders()
     }, []);
+
     return (<>
         
                 <table className="table table-hover table-bordered table-sm">
@@ -23,7 +36,6 @@ export function OTable(){
                         <tr>
                             <th>S.N</th>
                             <th>Bill Number</th>
-                            <th>Supplier</th>
                             <th>Retailer</th>
                             <th>Product</th>
                             <th>Status</th>
@@ -37,7 +49,6 @@ export function OTable(){
                             <tr key={i}>
                                 <td style={{color:"White"}}>{i + 1}</td>
                                 <td style={{color:"White"}}>{o.bill_number}</td>
-                                <td style={{color:"White"}}>{o.supplier?.name}</td>
                                 <td style={{color:"White"}}>{o.retailer?.full_name}</td>
                                 <td style={{color:"White"}}>{o.product?.product_name}</td>
                                 <td style={{color:"White"}}>{o?.status}</td>

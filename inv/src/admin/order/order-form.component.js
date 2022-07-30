@@ -17,9 +17,9 @@ let default_data = {
 export function OrderFormComponent({ onHandleSubmit, order }) {
     let user = JSON.parse(localStorage.getItem('reactuser_user'));
     let role = user.role;
-    
+    console.log("here",order)
     let [err, setErr] = useState(default_data);
-    let [data, setData] = useState(order ?? default_data);
+    let [data, setData] = useState();
     let [price, setPrice] = useState();
     let [qty, setQuantity] = useState();
     let [supplier, setSupplier] = useState();
@@ -49,6 +49,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
     const handleChange = (ev) => {
         let { value, name, type } = ev.target;
 
+        console.log(value)
         setData((pre) => {
             return {
                 ...pre,
