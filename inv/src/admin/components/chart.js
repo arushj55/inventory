@@ -41,20 +41,36 @@ export function Chart(props) {
   
 const labels = [props.date];
 
- const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Purchases',
-      data: labels.map(() => props.purchase),
-      backgroundColor: 'red',
-    },
-    {
-      label: 'Sales',
-      data: labels.map(() => props.sales),
-      backgroundColor: 'green',
-    },
-  ],
-};  
+//  const data = {
+//   labels,
+//   datasets: [
+//     {
+//       label: 'Purchases',
+//       data: labels.map(() => props.purchase),
+//       backgroundColor: 'red',
+//     },
+//     {
+//       label: 'Sales',
+//       data: labels.map(() => props.sales),
+//       backgroundColor: 'green',
+//     },
+//   ],
+// };
+const data = {
+  labels: [
+  props.date
+    ],
+  datasets: [{
+          label: 'Purchases',
+          data: labels.map(() => props.purchase),
+          backgroundColor: 'red',
+        },
+        {
+          label: 'Sales',
+          data: labels.map(() => props.sales),
+          backgroundColor: 'green',
+        },
+]
+};
   return <Bar options={options} data={data} />;
 }

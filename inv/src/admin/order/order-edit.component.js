@@ -13,8 +13,6 @@ export function OrderEdit(){
     let params = useParams();
     let [order, setOrder] = useState();
 
-    console.log("orderid",order)
-    console.log("paramsid",params.id)
     const editOrder = async (data) => {
         try {
             let response = await uploader('put','order/'+order._id, data,true)

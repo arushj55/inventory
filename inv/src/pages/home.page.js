@@ -47,11 +47,12 @@ export function HomePage() {
             </div>
             <div className="col-6">
                 <h1 align="center" className="col-12">About us</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+               <p>
+                Akar Enterprises is the leading Surgical and medical supplier 
+                inside kathmandu valley. We are located in blue bird Mall,Kathmandu.</p>
+               <p> We supplie the best quality surgical and medical equipement in reasonalble 
+                price with fast delivery facilities with in kathmandu valley.</p>
+               
             </div>
         </div>
 

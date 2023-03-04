@@ -1,14 +1,14 @@
-import { postItem, uploader } from "../../service/axios.service";
+import { postItem, uploader,getItems} from "../../service/axios.service";
 import { AdminPageTitle } from "../components/page-title.component";
 import { OrderFormComponent } from "./order-form.component";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { useEffect, useState } from "react";
 
 export function OrderCreate() {
     let navigate = useNavigate();
-
-
+    let params = useParams();
+    let [product, setProduct] = useState()
     const addOrder = async (data) => {
          try {
             let response = await postItem('/order', data, true)
@@ -41,14 +41,34 @@ export function OrderCreate() {
          
        
     }
+console.log(params.id)
+    useEffect(() => {
+        getItems('/product/'+params.id)
+        .then((res) => {
+            console.log(res)
+            let pro =({
+                label: res.data.result.supplier.name,
+                value: res.data.result.supplier._id
+            })
+            setProduct(pro)
+        })
+        .catch((error) => {
+            console.log(error)
+            toast.error(error.response.msg)
+           // navigate('/dashboard');
+             navigate(-1);
+        })
+    }, []);
+
 
     return (<>
         <AdminPageTitle
-            title="Order Add"
-            bread_crumb="Order Add"
+            title="Order"
+            bread_crumb="Order"
         />
         <OrderFormComponent
             onHandleSubmit={addOrder}
+            order={product}
         />
     </>);
 }

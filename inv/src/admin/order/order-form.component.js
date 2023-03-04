@@ -14,7 +14,7 @@ let default_data = {
     price: 0,
 };
 
-export function OrderFormComponent({ onHandleSubmit, order }) {
+export function OrderFormComponent({ onHandleSubmit,order}) {
     let user = JSON.parse(localStorage.getItem('reactuser_user'));
     let role = user.role;
     console.log("here",order)
@@ -49,7 +49,6 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
     const handleChange = (ev) => {
         let { value, name, type } = ev.target;
 
-        console.log(value)
         setData((pre) => {
             return {
                 ...pre,
@@ -71,7 +70,8 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                 errMsg = value != "delivered" || value != 'pending' ? 'state is either delivered or pending' : '';
                 break
             case "quantity":
-                if (value > qty && data.status === 'sales') {
+
+                if (value > qty && data.status === 'sale') {
                     errMsg = "Quantity is higher than stock value"
                 }
                 if (value === '') {
@@ -187,7 +187,7 @@ export function OrderFormComponent({ onHandleSubmit, order }) {
                                             <Form.Group as={Col} md="8" controlId="validationCustom01">
                                                 <Form.Label>Supplier</Form.Label>
                                                 <Select
-                                                    value={default_supplier}
+                                                    value={order}
                                                     onChange={handleSupplierChange}
                                                     options={supplier}
 
